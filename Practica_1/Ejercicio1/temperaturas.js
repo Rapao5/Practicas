@@ -1,21 +1,14 @@
-const temperaturas = [10, 20, 30, 18, 22.5, 32, 25];
+const temperaturas = [-10, 20, -2, 18, 22.5, 32, 25];
 
-let temperaturaBaja = 100;
-let temperaturaAlta = 0;
+let temperaturaBaja = null;
+let temperaturaAlta = null;
 let total = 0;
 let contador = 0;
 
-for(let i=0; i<temperaturas.length; i++){
-    total += temperaturas[i];
-    contador++;
-    if(temperaturas[i]<temperaturaBaja){
-        temperaturaBaja=temperaturas[i];
-    }
-    if(temperaturas[i]>temperaturaAlta){
-        temperaturaAlta=temperaturas[i];
-    }
-}
+temperaturaAlta = Math.max(...temperaturas);
+temperaturaBaja = Math.min(...temperaturas);
+total = temperaturas.reduce((acumulador, num) => acumulador + num, 0);
 
-let media = total/contador;
+let media = total/temperaturas.length;
 
 console.log("Temperatura media: " + media + " Grados", " Temperatura más baja: " + temperaturaBaja + " Grados", " Temperatura más alta: " + temperaturaAlta + " Grados.");
