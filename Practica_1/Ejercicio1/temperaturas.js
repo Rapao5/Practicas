@@ -3,7 +3,6 @@ const temperaturas = [-10, 20, -2, 18, 22.5, 32, 25];
 let temperaturaBaja = null;
 let temperaturaAlta = null;
 let total = 0;
-let contador = 0;
 
 temperaturaAlta = Math.max(...temperaturas);
 temperaturaBaja = Math.min(...temperaturas);
