@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "QKjRsw6geOs=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\Desktop\\Practicas\\Practica_2\\ProjectGaia\\backend\\backend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.3\\microsoft.aspnetcore.openapi.10.0.3.nupkg.sha512",
+    "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

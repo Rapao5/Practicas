@@ -1,0 +1,22 @@
+info:
+  name: Untitled 2
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: https://localhost:7044/api/TodoItems
+  body:
+    type: json
+    data: |-
+      {
+        "name": "walk dog",
+        "isComplete": true
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
