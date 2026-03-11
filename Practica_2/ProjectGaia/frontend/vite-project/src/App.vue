@@ -24,7 +24,7 @@ const searchSensor = computed(()=>{
 </script>
 
 <template>
-  <div>
+  <h1>Zonas y temperatura</h1>
     <input 
       v-model="searchQuery" 
       placeholder="Filtrar sensores..." 
@@ -32,12 +32,11 @@ const searchSensor = computed(()=>{
 
     <ul>
       <li v-for="sensor in searchSensor" :key="sensor.id">
-        {{ sensor.zona }}: {{ sensor.estado }}: {{ sensor.temperatura }}
+        {{ sensor.zona }}: {{ sensor.estado }}: {{ sensor.temperatura }} ºC
       </li>
     </ul>
     
     <p v-if="searchSensor.length === 0">No se encontraron sensores.</p>
-  </div>
 </template>
 
 <style>
