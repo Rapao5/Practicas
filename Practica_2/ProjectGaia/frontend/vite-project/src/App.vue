@@ -5,7 +5,7 @@
 <template>
 <div class="principal">
   <router-link to="/">Lista de Sensores</router-link> 
-  <router-link to="/formulario">Añadir Nuevo</router-link>
+  <router-link to="/formularioCrear">Añadir Nuevo</router-link>
   <router-view/>
 </div>
   

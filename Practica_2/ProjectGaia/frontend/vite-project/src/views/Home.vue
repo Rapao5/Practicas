@@ -20,8 +20,8 @@ const buscar = () => {
   });
 }
 
-const irACrear = () => router.push('/formulario')
-const irAEditar = (id) => router.push(`/formulario/${id}`)
+const irACrear = () => router.push('/formularioCrear')
+const irAEditar = (id) => router.push(`/formularioEditar/${id}`)
 
 onMounted(() => {
   buscar();
@@ -46,7 +46,7 @@ onMounted(() => {
       <br>
       <label>Temperatura menor a</label>
       <input v-model="searchTemperaturaBaja" placeholder="Ej. 0 ºC" type="number">
-    <button @click="buscar">Buscar</button>
+    <button class="boton_crear" @click="buscar">Buscar</button>
 
     <ul>
       <li v-for="sensor in sensorStore.sensors" :key="sensor.id">

@@ -1,5 +1,6 @@
-import Formulario from "@/views/formulario.vue";
-import Home from "@/views/home.vue";
+import FormularioCrear from "@/views/FormularioCrear.vue";
+import FormularioEditar from "@/views/FormularioEditar.vue";
+import Home from "@/views/Home.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
@@ -11,9 +12,14 @@ const router = createRouter({
       component: Home
     },
     {
-      path: "/formulario/:id?",
-      name: "formulario",
-      component: Formulario
+      path: "/formularioCrear",
+      name: "formularioCrear",
+      component: FormularioCrear
+    },
+    {
+      path: "/formularioEditar/:id",
+      name: "formularioEditar",
+      component: FormularioEditar
     }
   ]
 })
