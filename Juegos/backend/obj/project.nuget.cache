@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "4ffHxQt2Tyg=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\Desktop\\Practicas\\Juegos\\backend\\backend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.3\\microsoft.aspnetcore.openapi.10.0.3.nupkg.sha512",
+    "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.entityframeworkcore\\10.0.5\\microsoft.entityframeworkcore.10.0.5.nupkg.sha512",
+    "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\10.0.5\\microsoft.entityframeworkcore.abstractions.10.0.5.nupkg.sha512",
+    "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\10.0.5\\microsoft.entityframeworkcore.analyzers.10.0.5.nupkg.sha512",
+    "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\10.0.5\\microsoft.entityframeworkcore.inmemory.10.0.5.nupkg.sha512",
+    "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

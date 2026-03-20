@@ -1,0 +1,26 @@
+info:
+  name: Untitled 1
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: https://localhost:7020/api/Games
+  body:
+    type: json
+    data: |-
+      {
+        "titulo": "Elden Ring",
+        "genero": "Soul",
+        "descripcion": "Largo",
+        "jugado": true,
+        "tiempo": 100,
+        "puntuacion": 10
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
