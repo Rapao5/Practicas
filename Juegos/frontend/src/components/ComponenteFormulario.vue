@@ -5,7 +5,6 @@ const props = defineProps({
   juegoInicial: {
     type: Object,
     default: () => ({
-      id: 0,
       titulo: "",
       genero: "",
       descripcion: "",
