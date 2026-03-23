@@ -68,7 +68,7 @@ const guardar = () => {
 }
 </script>
 <template>
-  <div class="bg-gray-200 grid p-5 max-w-md text-center">
+  <div class="bg-gray-200 grid p-5 max-w-md text-center min-h-60 min-w-96">
     <label>Imagen</label>
     <input type="text" v-model="gameForm.imagen" placeholder="Url de la imagen">
     <label>Título</label>

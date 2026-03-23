@@ -83,8 +83,8 @@ const eliminar = async (id) => {
         <option :value="true">Si</option>
         <option :value="false">No</option>
       </select>
-      <button class="btn bg-green-200 p-3 ml-3" @click="aplicarFiltro">Enviar</button>
-      <button class="btn bg-blue-200 p-3 ml-3" @click="resetearFiltros">Limpiar filtros</button>
+      <button class="btn bg-green-200 p-3 ml-3 mt-3" @click="aplicarFiltro">Enviar</button>
+      <button class="btn bg-blue-200 p-3 ml-3 mt-3" @click="resetearFiltros">Limpiar filtros</button>
     </div>
     <table class="table w-full">
       <thead>
@@ -107,7 +107,9 @@ const eliminar = async (id) => {
           <td>{{ game.genero }}</td>
           <td>{{ game.tiempo }} Horas</td>
           <td class="max-w-xs break-words px-4">{{ game.descripcion }}</td>
-          <td>{{ game.puntuacion }} /10</td>
+          <td v-if="game.puntuacion < 4" class="text-red-500 text-xl">{{ game.puntuacion }} /10</td>
+          <td v-else-if="game.puntuacion >= 4 && game.puntuacion < 7" class="text-yellow-500 text-xl">{{ game.puntuacion }} /10</td>
+          <td v-else class="text-green-500 text-xl">{{ game.puntuacion }} /10</td>
           <td>{{ game.jugado ? 'Sí' : 'No'}}</td>
           <td> <RouterLink :to="`/formularioUpdate/${game.id}`">
             <button class="btn bg-yellow-200 p-3">Editar</button>
