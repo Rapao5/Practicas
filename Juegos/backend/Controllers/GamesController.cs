@@ -34,7 +34,8 @@ public class GamesController : ControllerBase
       Descripcion = game.Descripcion,
       Jugado = game.Jugado,
       Tiempo = game.Tiempo,
-      Puntuacion = game.Puntuacion
+      Puntuacion = game.Puntuacion,
+      Imagen = game.Imagen
     };
     return Ok(gameDTO);
 
@@ -53,8 +54,8 @@ public class GamesController : ControllerBase
     [FromQuery] double? puntuacion)
   {
     var consulta = context.Games.AsQueryable();
-    if(!string.IsNullOrEmpty(titulo)) consulta = consulta.Where( g => g.Titulo.Contains(titulo));
-    if(!string.IsNullOrEmpty(genero)) consulta = consulta.Where( g => g.Genero.Contains(genero));
+    if(!string.IsNullOrEmpty(titulo)) consulta = consulta.Where( g => g.Titulo.ToLower().Contains(titulo.ToLower()));
+    if(!string.IsNullOrEmpty(genero)) consulta = consulta.Where( g => g.Genero.ToLower().Contains(genero.ToLower()));
     if(jugado!=null) consulta = consulta.Where(g => g.Jugado == jugado);
     if(tiempo.HasValue) consulta = consulta.Where(g => g.Tiempo == tiempo);
     if(tiempoMayorA.HasValue) consulta = consulta.Where(g => g.Tiempo >= tiempoMayorA);
@@ -71,7 +72,8 @@ public class GamesController : ControllerBase
        Descripcion = g.Descripcion,
        Jugado = g.Jugado,
        Tiempo = g.Tiempo,
-       Puntuacion = g.Puntuacion
+       Puntuacion = g.Puntuacion,
+       Imagen = g.Imagen
 
     }).ToListAsync();
 
@@ -114,6 +116,7 @@ public class GamesController : ControllerBase
     game.Jugado = updateGame.Jugado;
     game.Tiempo = updateGame.Tiempo;
     game.Puntuacion = updateGame.Puntuacion;
+    game.Imagen = updateGame.Imagen;
 
     await context.SaveChangesAsync();
     return Ok(game);

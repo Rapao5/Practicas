@@ -9,4 +9,5 @@ public class GameDTO
   public required bool Jugado {get; set;}
   public required double Tiempo {get; set;}
   public required double Puntuacion{get; set;}
+  public required string Imagen {get; set;}
 }

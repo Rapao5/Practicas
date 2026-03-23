@@ -10,7 +10,8 @@ const props = defineProps({
       descripcion: "",
       jugado: false,
       tiempo: 0,
-      puntuacion: 0
+      puntuacion: 0,
+      imagen: ""
     })
   }
 });
@@ -22,7 +23,8 @@ const errores = ref({
   genero: "",
   descripcion: "",
   tiempo: 0,
-  puntuacion: 0
+  puntuacion: 0,
+  imagen: ""
 });
 
 const validar = () => {
@@ -31,7 +33,7 @@ const validar = () => {
     genero: "", 
     descripcion: "", 
     tiempo: "", 
-    puntuacion: "" 
+    puntuacion: ""
   };
   let valido = true;
   if(gameForm.value.titulo.trim().length < 3){
@@ -67,6 +69,8 @@ const guardar = () => {
 </script>
 <template>
   <div class="bg-gray-200 grid p-5 max-w-md text-center">
+    <label>Imagen</label>
+    <input type="text" v-model="gameForm.imagen" placeholder="Url de la imagen">
     <label>Título</label>
     <input type="text" v-model="gameForm.titulo" placeholder="Ej: Crash Bandicoot">
     <span class="text-red-400" v-if="errores.titulo">{{ errores.titulo }}</span>

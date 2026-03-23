@@ -11,7 +11,8 @@ export const useGamesStore = defineStore("games", () => {
     descripcion: "",
     jugado: null,
     tiempo: null,
-    puntuacion: null
+    puntuacion: null,
+    imagen: ""
   };
 
   const fetchGames = async (filtros = {}) => {

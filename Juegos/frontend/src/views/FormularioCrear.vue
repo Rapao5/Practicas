@@ -13,7 +13,7 @@ const guardarGame = async (gameData) => {
 
 </script>
 <template>
-  <h1 class="text-center">Añadir game</h1>
+  <h1 class="text-center text-3xl">Añadir game</h1>
   <div class="mt-5 flex items-center justify-center w-full">
     <ComponenteFormulario @enviar="guardarGame"/>
   </div>

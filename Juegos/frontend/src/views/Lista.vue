@@ -43,8 +43,8 @@ const eliminar = async (id) => {
 }
 </script>
 <template>
-  <div class="text-center p-5">
-    <h1 class="m-5">Games</h1>
+  <div class="text-center">
+    <h1 class="m-5 text-3xl">Games</h1>
     <div class="shadow-lg p-4 mb-8 bg-gray-50">
       <label class="input ml-3 mt-3">
         <span class="label">Título</span>
@@ -89,22 +89,24 @@ const eliminar = async (id) => {
     <table class="table w-full">
       <thead>
         <tr class="bg-gray-400">
+          <th>Portada</th>
           <th>Título</th>
           <th>Género</th>
           <th>Tiempo</th>
           <th>Descripción</th>
           <th>Puntuación</th>
           <th>¿Jugado?</th>
-          <th></th>
+          <th>Acciones</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <tr class="bg-gray-100" v-for="game in store.games" :key="game.id">
-          <td>{{ game.titulo }}</td>
+          <td><img class="w-32 h-32" :src="game.imagen ? game.imagen : 'https://i.redd.it/czk30lrobkxa1.jpeg'"></td>
+          <td class="text-xl font-bold">{{ game.titulo }}</td>
           <td>{{ game.genero }}</td>
           <td>{{ game.tiempo }} Horas</td>
-          <td>{{ game.descripcion }}</td>
+          <td class="max-w-xs break-words px-4">{{ game.descripcion }}</td>
           <td>{{ game.puntuacion }} /10</td>
           <td>{{ game.jugado ? 'Sí' : 'No'}}</td>
           <td> <RouterLink :to="`/formularioUpdate/${game.id}`">
@@ -115,7 +117,7 @@ const eliminar = async (id) => {
         </tr>
       </tbody>
     </table>
-    <p v-if="store.games.length === 0"> No hay juegos disponibles</p>
+    <p class="mt-5" v-if="store.games.length === 0"> No hay juegos disponibles</p>
   </div>
 </template>
 <style></style>
