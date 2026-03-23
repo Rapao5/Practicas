@@ -1,10 +1,13 @@
 <script setup></script>
 
 <template>
-  <RouterLink to="/">Inicio</RouterLink>
-  <router-link to="/lista">Lista de games</router-link> 
-  <router-link to="/formularioCrear">Añadir Nuevo game</router-link>
-  <router-view/>
+  <header class="bg-blue-400 shadow-lg p-4 mb-8 text-center">
+    <RouterLink to="/" class="ml-5">Inicio</RouterLink>
+    <router-link to="/lista" class="ml-5">Lista de games</router-link> 
+    <router-link to="/formularioCrear" class="ml-5">Añadir Nuevo game</router-link>
+  </header>
+    <router-view/>
 </template>
 
-<style></style>
+<style>
+</style>

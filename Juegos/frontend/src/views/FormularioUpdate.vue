@@ -20,11 +20,14 @@ const guardarGame = async (gameData) => {
 }
 </script>
 <template>
-<h1>Editar Game</h1>
+<h1 class="text-center">Editar Game</h1>
+<div class="mt-5 flex items-center justify-center w-full">
   <ComponenteFormulario v-if="juegoAEditar"
-  :juegoInicial="juegoAEditar"
-  @enviar="guardarGame"
-   />
+    :juegoInicial="juegoAEditar"
+    @enviar="guardarGame"
+    />
+</div>
+  
 </template>
 <style>
 </style>
