@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useGamesStore } from '@/stores/games';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 
 const store = useGamesStore();
 const filtros = ref({
@@ -15,16 +15,18 @@ const filtros = ref({
   puntuacion: null,
   jugado: null
 });
-
+const paginaActual = ref(1);
 onMounted(() => {
   store.fetchGames();
 });
 
 const aplicarFiltro = () => {
-  store.fetchGames(filtros.value);
+  paginaActual.value=1;
+  store.fetchGames(filtros.value, paginaActual.value);
 };
 
 const resetearFiltros = () => {
+  paginaActual.value=1;
   filtros.value.titulo = '';
   filtros.value.genero = '';
   filtros.value.tiempo = null;
@@ -35,11 +37,22 @@ const resetearFiltros = () => {
   filtros.value.puntuacion = null
   filtros.value.jugado = null
   
-  store.fetchGames(filtros.value);
+  store.fetchGames(filtros.value,paginaActual.value);
 };
+
+const pasarPagina = async () => {
+  paginaActual.value++;
+  await store.fetchGames(filtros.value, paginaActual.value);
+}
+const volverPagina = async () => {
+  if (paginaActual <= 1) return
+  paginaActual.value--;
+  await store.fetchGames(filtros.value, paginaActual.value)
+}
 
 const eliminar = async (id) => {
   await store.deleteGame(id);
+  await store.fetchGames(filtros.value, paginaActual.value);
 }
 </script>
 <template>
@@ -121,5 +134,15 @@ const eliminar = async (id) => {
     </table>
     <p class="mt-5" v-if="store.games.length === 0"> No hay juegos disponibles</p>
   </div>
+  <div v-if="store.games.length > 0" class="flex justify-center items-center gap-4 my-6">
+      <button class="btn bg-blue-300 p-3"
+      @click="volverPagina"
+      :disabled="paginaActual <= 1">Anterior
+      </button>
+      <span class="font-bold">Página: {{ paginaActual }}</span>
+      <button class="btn bg-blue-300 p-3"
+      @click="pasarPagina"
+      :disabled="store.games.length < 50">Siguiente</button>
+    </div>
 </template>
 <style></style>

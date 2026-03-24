@@ -1,15 +1,15 @@
 info:
-  name: Untitled 3
+  name: muchos registros
   type: http
-  seq: 3
+  seq: 7
 
 http:
-  method: DELETE
-  url: https://localhost:7020/api/Games/1
+  method: POST
+  url: http://localhost:7020/api/Games/seed
   auth: inherit
 
 settings:
   encodeUrl: true
-  timeout: 0
+  timeout: 300000
   followRedirects: true
   maxRedirects: 5

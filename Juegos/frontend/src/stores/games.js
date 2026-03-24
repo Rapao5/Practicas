@@ -15,11 +15,15 @@ export const useGamesStore = defineStore("games", () => {
     imagen: ""
   };
 
-  const fetchGames = async (filtros = {}) => {
-    const response = await axios.get(API_URL, {
-      params: filtros
+  const fetchGames = async (filtros = {}, pagina = 1) => {
+    const response = await axios.get(`${API_URL}/paginado`, {
+      params: {
+        ...filtros, 
+        pagina: pagina,
+        cantidad: 50
+      } 
     });
-    games.value=response.data;
+    games.value=response.data.juegos;
   }
 
   const saveGame = async (nuevoGame) => {

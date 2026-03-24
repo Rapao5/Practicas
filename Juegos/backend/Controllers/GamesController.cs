@@ -41,7 +41,39 @@ public class GamesController : ControllerBase
 
   }
 
-  [HttpGet]
+  [HttpPost("seed")]
+  public async Task<IActionResult> anadirGames()
+  {
+
+    int total = 100000;
+    int loteSize = 5000;
+
+    for (int i = 0; i < total; i += loteSize)
+    {
+        var lista = new List<Game>();
+        for (int j = 1; j <= loteSize; j++)
+        {
+            lista.Add(new Game {
+                Titulo = $"Juego Test {i + j}",
+                Genero = "Simulación",
+                Descripcion = "Generado masivamente",
+                Imagen = "https://i.redd.it/czk30lrobkxa1.jpeg",
+                Puntuacion = 5,
+                Tiempo = 10,
+                Jugado = false
+            });
+        }
+        
+        context.Games.AddRange(lista);
+        await context.SaveChangesAsync();
+        
+        context.ChangeTracker.Clear();
+    }
+
+    return Ok("Base de datos poblada con 100.000 registros.");
+  }
+
+  [HttpGet("paginado")]
   public async Task<ActionResult<IEnumerable<GameDTO>>> filtrarGame(
     [FromQuery] string? titulo,
     [FromQuery] string? genero,
@@ -51,7 +83,9 @@ public class GamesController : ControllerBase
     [FromQuery] double? tiempoMenorA,
     [FromQuery] double? puntuacionMayorA,
     [FromQuery] double? puntuacionMenorA,
-    [FromQuery] double? puntuacion)
+    [FromQuery] double? puntuacion,
+    [FromQuery] int pagina = 1,
+    [FromQuery] int cantidad = 50)
   {
     var consulta = context.Games.AsQueryable();
     if(!string.IsNullOrEmpty(titulo)) consulta = consulta.Where( g => g.Titulo.ToLower().Contains(titulo.ToLower()));
@@ -64,7 +98,13 @@ public class GamesController : ControllerBase
     if(puntuacionMenorA.HasValue) consulta = consulta.Where(g => g.Puntuacion <= puntuacionMenorA);
     if(puntuacion.HasValue) consulta = consulta.Where(g => g.Puntuacion == puntuacion);
 
-    var resultados = await consulta.Select( g => new GameDTO {
+    var totalRegistros = await consulta.CountAsync();
+
+    var resultados = await consulta
+    .OrderBy(g => g.Id)
+    .Skip((pagina - 1)  * cantidad)
+    .Take(cantidad)
+    .Select( g => new GameDTO {
 
        Id=g.Id,
        Titulo = g.Titulo,
@@ -77,7 +117,11 @@ public class GamesController : ControllerBase
 
     }).ToListAsync();
 
-    return Ok(resultados);
+    return Ok(new
+    {
+      Total = totalRegistros,
+      Juegos = resultados
+    });
 
   }
 
