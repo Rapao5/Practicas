@@ -1,8 +1,10 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useGamesStore } from '@/stores/games';
-import { RouterLink, useRoute } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
 
+const route = useRoute();
+const router = useRouter();
 const store = useGamesStore();
 const filtros = ref({
   titulo: '',
@@ -16,39 +18,59 @@ const filtros = ref({
   jugado: null
 });
 const paginaActual = ref(1);
-onMounted(() => {
-  store.fetchGames();
-});
+
+watch(
+  () => route.query,
+  async (nuevaQuery) => {
+    console.log(nuevaQuery)
+    paginaActual.value = nuevaQuery.pagina ? parseInt(nuevaQuery.pagina) : 1;
+
+    filtros.value.titulo = nuevaQuery.titulo || '';
+    filtros.value.genero = nuevaQuery.genero || '';
+    filtros.value.tiempo = parseInt(nuevaQuery.tiempo) || null;
+    filtros.value.tiempoMayorA = parseInt(nuevaQuery.tiempoMayorA) || null;
+    filtros.value.tiempoMenorA = parseInt(nuevaQuery.tiempoMenorA) || null;
+    filtros.value.puntuacion = parseInt(nuevaQuery.puntuacion) || null;
+    filtros.value.puntuacionMayorA = parseInt(nuevaQuery.puntuacionMayorA) || null;
+    filtros.value.puntuacionMenorA = parseInt(nuevaQuery.puntuacionMenorA) || null;
+    filtros.value.jugado = nuevaQuery.jugado === 'true' ? true : (nuevaQuery.jugado === 'false' ? false : null);
+    
+    await store.fetchGames(filtros.value, paginaActual.value);
+  },
+  { immediate: true }
+);
+
+const cambiarPagina = (nuevaPagina) =>{
+  router.push({
+    path: '/lista',
+    query: {...route.query, pagina: nuevaPagina}
+  });
+}
+
+const pasarPagina = () => {
+  cambiarPagina(paginaActual.value + 1);
+}
+
+const volverPagina = () => {
+  if(paginaActual.value > 1) cambiarPagina(paginaActual.value - 1)
+}
 
 const aplicarFiltro = () => {
-  paginaActual.value=1;
-  store.fetchGames(filtros.value, paginaActual.value);
+  router.push({
+    path: '/lista',
+    query: {
+      ...filtros.value,
+      pagina: 1
+    }
+  });
 };
 
 const resetearFiltros = () => {
-  paginaActual.value=1;
-  filtros.value.titulo = '';
-  filtros.value.genero = '';
-  filtros.value.tiempo = null;
-  filtros.value.tiempoMayorA = null
-  filtros.value.tiempoMenorA = null
-  filtros.value.puntuacionMayorA = null
-  filtros.value.puntuacionMenorA = null
-  filtros.value.puntuacion = null
-  filtros.value.jugado = null
-  
-  store.fetchGames(filtros.value,paginaActual.value);
+  router.push({
+    path: '/lista',
+    query: { pagina: 1} 
+  });
 };
-
-const pasarPagina = async () => {
-  paginaActual.value++;
-  await store.fetchGames(filtros.value, paginaActual.value);
-}
-const volverPagina = async () => {
-  if (paginaActual <= 1) return
-  paginaActual.value--;
-  await store.fetchGames(filtros.value, paginaActual.value)
-}
 
 const eliminar = async (id) => {
   await store.deleteGame(id);
@@ -124,7 +146,10 @@ const eliminar = async (id) => {
           <td v-else-if="game.puntuacion >= 4 && game.puntuacion < 7" class="text-yellow-500 text-xl">{{ game.puntuacion }} /10</td>
           <td v-else class="text-green-500 text-xl">{{ game.puntuacion }} /10</td>
           <td>{{ game.jugado ? 'Sí' : 'No'}}</td>
-          <td> <RouterLink :to="`/formularioUpdate/${game.id}`">
+          <td> <RouterLink :to="{
+                  path :`/formularioUpdate/${game.id}`,
+                  query: {...route.query}
+                  }">
             <button class="btn bg-yellow-200 p-3">Editar</button>
             </RouterLink>
           </td>

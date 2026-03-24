@@ -16,8 +16,10 @@ onMounted(async() => {
 
 const guardarGame = async (gameData) => {
   await store.updateGame(gameData);
-  
-  router.push('/lista');
+  router.push({
+    path: '/lista',
+    query: route.query
+  });
 }
 </script>
 <template>
