@@ -15,7 +15,8 @@ http:
         "descripcion": "Largo",
         "jugado": true,
         "tiempo": 100,
-        "puntuacion": 10
+        "puntuacion": 10,
+        "imagen": "a"
       }
   auth: inherit
 

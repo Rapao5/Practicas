@@ -1,40 +1,64 @@
 <script setup>
 import { useGamesStore } from '@/stores/games';
-import { onMounted } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useVirtualList } from '@vueuse/core'; 
+import { useIntersectionObserver } from '@vueuse/core';
 
+const paginaActual = ref(1);
+const centinela = ref(null);
 const store = useGamesStore();
-onMounted(() => {
-  store.fetchGames();
+
+onMounted(async () => {
+  await store.scrollGames();
 });
+
+const juegos = computed(() => store.games);
+
+const { list, containerProps, wrapperProps } = useVirtualList(
+  juegos,
+  {
+    itemHeight: 100,
+  },
+);
+
+useIntersectionObserver (
+  centinela,
+  async (entries) => {
+    const entry = entries[0];
+    if(entry.isIntersecting){
+      console.log('Entries')
+      paginaActual.value ++;
+      await store.scrollGames({}, paginaActual.value);
+    }
+    
+  }
+);
 </script>
+
 <template>
-<div class="text-center" v-if="store.games.length">
-  <h1 class="text-2xl">¡Tus juegos favoritos hechos cartas!</h1>
-  <table class="table w-full">
-    <tr class="flex flex-wrap justify-center gap-10" >
-      <td class="mt-5" v-for="game in store.games" :key="game.id">
-        <div class="hover-3d">
-        <figure class="w-60 rounded-2xl">
-          <img class="w-60 h-80" :src="game.imagen ? game.imagen : 'https://i.redd.it/czk30lrobkxa1.jpeg'" alt="Tailwind CSS 3D card" />
-        </figure>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+  <div class="text-center" v-if="store.games.length">
+    <h1 class="text-2xl mb-4">¡Tus juegos favoritos hechos cartas!</h1>
+    
+    <div v-bind="containerProps" style="height: 500px; overflow-y: auto; border: 1px solid #eee;">
+      <div v-bind="wrapperProps">
+        <div v-for="game in list" :key="game.index" style="height: 100px" class="flex items-center justify-center border-b">
+          <img 
+            class="w-20 h-20 object-cover" 
+            :src="game.data.imagen ? game.data.imagen : 'https://i.redd.it/czk30lrobkxa1.jpeg'"
+          >
+          <span class="ml-4 font-bold">{{ game.data.titulo }}</span>
         </div>
-        <p class="text-xl text-center">{{ game.titulo }}</p>
-      </td>
-    </tr>
-  </table>
-</div>
-<div class="text-center" v-if="!store.games.length">
-  <h1 class="text-2xl">Añade tus juegos favoritos</h1>
-  <button class="btn bg-green-300 pr-3 mt-10"><router-link to="/formularioCrear" class="ml-5">Añadir Nuevo game</router-link></button>
-</div>
+        <div ref="centinela"></div>
+        <p>Cargando</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center" v-else>
+    <h1 class="text-2xl">Añade tus juegos favoritos</h1>
+    <RouterLink to="/formularioCrear">
+      <button class="btn bg-green-300 p-3 mt-10">Añadir Nuevo game</button>
+    </RouterLink>
+  </div>
 </template>
-<style></style>

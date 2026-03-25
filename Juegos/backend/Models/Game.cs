@@ -10,4 +10,5 @@ public class Game
   public required double Tiempo {get; set;}
   public required double Puntuacion{get; set;}
   public required string Imagen {get; set;}
+  public required int IdPlayer {get; set;}
 }

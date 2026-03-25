@@ -5,11 +5,7 @@ info:
 
 http:
   method: GET
-  url: https://localhost:7020/api/Games?jugado=false
-  params:
-    - name: jugado
-      value: "false"
-      type: query
+  url: https://localhost:7020/api/Games/paginado
   body:
     type: json
     data: ""

@@ -52,7 +52,7 @@ const pasarPagina = () => {
 }
 
 const volverPagina = () => {
-  if(paginaActual.value > 1) cambiarPagina(paginaActual.value - 1)
+  if(paginaActual.value > 1) cambiarPagina(paginaActual.value - 1);
 }
 
 const aplicarFiltro = () => {
