@@ -1,15 +1,15 @@
 info:
-  name: muchos registros
+  name: muchos registros players
   type: http
   seq: 7
 
 http:
   method: POST
-  url: https://localhost:7020/api/Games/seedGame
+  url: https://localhost:7020/api/Games/seedPlayer
   auth: inherit
 
 settings:
   encodeUrl: true
-  timeout: 300000
+  timeout: 5000
   followRedirects: true
   maxRedirects: 5

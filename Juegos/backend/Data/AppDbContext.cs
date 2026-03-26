@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using backend.game;
+using backend.player;
 
 namespace backend.Data
 {
@@ -9,5 +10,6 @@ namespace backend.Data
     {
     }
     public DbSet<Game> Games {get; set;}
+    public DbSet<Player> Players {get; set;}
   }
 }

@@ -1,6 +1,8 @@
 using backend.Data;
 using backend.game;
 using backend.gameDTO;
+using backend.player;
+using backend.playerDTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +17,35 @@ public class GamesController : ControllerBase
   public GamesController(AppDbContext context)
   {
     this.context=context;
+  }
+
+  [HttpGet("playerGames")]
+  public async Task<ActionResult> GetPlayerGames()
+  {
+
+    var allPlayers = await context.Players.ToListAsync();
+    var allGames = await context.Games.ToListAsync();
+
+    Dictionary<int, int> playerGames = new Dictionary<int, int>();
+    var diccionarioGames = allGames.ToDictionary(g => g.Id);
+
+    foreach (var player in allPlayers)
+    {
+      int cantidad = player.IdGames != null ? player.IdGames.Length : 0;
+      playerGames.Add(player.Id, cantidad);
+    }
+
+    var respuesta = allPlayers.Select(p => new
+    {
+      Id = p.Id,
+      Nombre = p.Nombre,
+      Especialidad = p.Especialidad,
+      Games = p.IdGames.Select(id =>
+        diccionarioGames.GetValueOrDefault(id)
+      )
+    });
+
+    return Ok(respuesta);
   }
 
   [HttpGet("{id}")]
@@ -41,11 +72,49 @@ public class GamesController : ControllerBase
 
   }
 
-  [HttpPost("seed")]
+  [HttpGet("player/{id}")]
+  public async Task<ActionResult<Game>> GetPlayer(int id)
+  {
+    var player = await context.Players.FindAsync(id);
+    if (player ==null)
+    {
+      return NotFound();
+    }
+
+    var playerDTO = new PlayerDTO
+    {
+      Id = player.Id,
+      Nombre = player.Nombre,
+      Especialidad = player.Especialidad,
+      IdGames = player.IdGames
+    };
+    return Ok(playerDTO);
+
+  }
+  
+  [HttpPost("seedPlayer")]
+  public async Task<IActionResult> anadirPlayers()
+  {
+    Random generador = new Random();
+    int total = 1000;
+    var lista = new List<Player>();
+    for(int i = 0; i < total; i++)
+    {
+      lista.Add(new Player{
+        Nombre = $"Nombre {i}",
+        Especialidad = $"Especialidad {i}",
+        IdGames =new int[] {generador.Next(1, 50001), generador.Next(1, 50001)}
+      });
+    }
+    await context.Players.AddRangeAsync(lista);
+    await context.SaveChangesAsync();
+    return Ok("Base de datos poblada con 1000 jugadores");
+  }
+
+  [HttpPost("seedGame")]
   public async Task<IActionResult> anadirGames()
   {
-
-    int total = 100000;
+    int total = 50000;
     int loteSize = 5000;
 
     for (int i = 0; i < total; i += loteSize)
@@ -70,7 +139,7 @@ public class GamesController : ControllerBase
         context.ChangeTracker.Clear();
     }
 
-    return Ok("Base de datos poblada con 100.000 registros.");
+    return Ok("Base de datos poblada con 50.000 games.");
   }
 
   [HttpGet("paginado")]
@@ -84,6 +153,7 @@ public class GamesController : ControllerBase
     [FromQuery] double? puntuacionMayorA,
     [FromQuery] double? puntuacionMenorA,
     [FromQuery] double? puntuacion,
+    [FromQuery] double? jugador,
     [FromQuery] int pagina = 1,
     [FromQuery] int cantidad = 50)
   {
@@ -97,6 +167,7 @@ public class GamesController : ControllerBase
     if(puntuacionMayorA.HasValue) consulta = consulta.Where(g => g.Puntuacion >= puntuacionMayorA);
     if(puntuacionMenorA.HasValue) consulta = consulta.Where(g => g.Puntuacion <= puntuacionMenorA);
     if(puntuacion.HasValue) consulta = consulta.Where(g => g.Puntuacion == puntuacion);
+    if(jugador!=null) consulta = consulta.Where(g => context.Players.Any( p => p.Id == jugador && p.IdGames.Contains(g.Id)));
 
     var totalRegistros = await consulta.CountAsync();
 
@@ -121,6 +192,42 @@ public class GamesController : ControllerBase
     {
       Total = totalRegistros,
       Juegos = resultados
+    });
+
+  }
+
+  [HttpGet("paginado/player")]
+  public async Task<ActionResult<IEnumerable<PlayerDTO>>> filtrarPlayer(
+    [FromQuery] string? nombre,
+    [FromQuery] string? especialidad,
+    [FromQuery] int? game,
+    [FromQuery] int pagina = 1,
+    [FromQuery] int cantidad = 50)
+  {
+    var consulta = context.Players.AsQueryable();
+    if(!string.IsNullOrEmpty(nombre)) consulta = consulta.Where( p => p.Nombre.ToLower().Contains(nombre.ToLower()));
+    if(!string.IsNullOrEmpty(especialidad)) consulta = consulta.Where( p => p.Especialidad.ToLower().Contains(especialidad.ToLower()));
+    if(game!=null) consulta = consulta.Where(p => p.IdGames.Contains(game.Value));
+
+    var totalRegistros = await consulta.CountAsync();
+
+    var resultados = await consulta
+    .OrderBy(p => p.Id)
+    .Skip((pagina - 1)  * cantidad)
+    .Take(cantidad)
+    .Select( p => new PlayerDTO {
+
+       Id=p.Id,
+       Nombre = p.Nombre,
+       Especialidad = p.Especialidad,
+       IdGames = p.IdGames
+
+    }).ToListAsync();
+
+    return Ok(new
+    {
+      Total = totalRegistros,
+      Player = resultados
     });
 
   }

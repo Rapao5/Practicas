@@ -27,7 +27,6 @@ useIntersectionObserver (
   async (entries) => {
     const entry = entries[0];
     if(entry.isIntersecting){
-      console.log('Entries')
       paginaActual.value ++;
       await store.scrollGames({}, paginaActual.value);
     }
