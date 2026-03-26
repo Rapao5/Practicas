@@ -5,11 +5,7 @@ info:
 
 http:
   method: GET
-  url: https://localhost:7020/api/Games/paginado/player?game=1
-  params:
-    - name: game
-      value: "1"
-      type: query
+  url: https://localhost:7020/api/Games/paginado/player
   auth: inherit
 
 settings:
