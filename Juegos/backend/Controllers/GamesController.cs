@@ -211,18 +211,28 @@ public class GamesController : ControllerBase
 
     var totalRegistros = await consulta.CountAsync();
 
-    var resultados = await consulta
+    var jugadores = await consulta
     .OrderBy(p => p.Id)
     .Skip((pagina - 1)  * cantidad)
     .Take(cantidad)
-    .Select( p => new PlayerDTO {
+    .ToListAsync();
 
-       Id=p.Id,
-       Nombre = p.Nombre,
-       Especialidad = p.Especialidad,
-       IdGames = p.IdGames
+    var idJuegos = jugadores
+    .SelectMany(p => p.IdGames ?? Array.Empty<int>())
+    .Distinct()
+    .ToList();
 
-    }).ToListAsync();
+    var diccionarioGames = await context.Games
+    .Where(g => idJuegos.Contains(g.Id))
+    .ToDictionaryAsync(g => g.Id);
+
+    var resultados = jugadores.Select(p => new
+    {
+      p.Id,
+      p.Nombre,
+      p.Especialidad,
+      Game = p.IdGames?.Select(id => diccionarioGames.GetValueOrDefault(id)).Where(game => game != null)
+    });
 
     return Ok(new
     {
@@ -245,12 +255,46 @@ public class GamesController : ControllerBase
     return CreatedAtAction(nameof(GetGame), new {id = nuevoGame.Id}, nuevoGame);
   }
 
+  [HttpPost("crearPlayer")]
+  public async Task<ActionResult<Player>> CrearPlayer([FromBody] Player nuevoPlayer)
+  {
+    if (nuevoPlayer == null)
+    {
+      return BadRequest("Datos no válidos");
+    }
+
+    var comprobarID = nuevoPlayer.IdGames ?? Array.Empty<int>();
+
+    var existe = await context.Games
+    .Where(g => comprobarID.Contains(g.Id))
+    .CountAsync();
+
+    if (existe != comprobarID.Length)
+    {
+      return BadRequest("Uno o más Ids de juegos no son válidos.");
+    }
+
+    context.Players.Add(nuevoPlayer);
+    await context.SaveChangesAsync();
+    return CreatedAtAction(nameof(GetPlayer), new {id = nuevoPlayer.Id}, nuevoPlayer);
+  }
+
   [HttpDelete("{id}")]
   public async Task<ActionResult<Game>> DeleteGame(int id)
   {
     var game = await context.Games.FindAsync(id);
     if(game == null) return NotFound($"No existe el game con id {id}");
     context.Games.Remove(game);
+    await context.SaveChangesAsync();
+    return NoContent();
+  }
+
+  [HttpDelete("deletePlayer/{id}")]
+  public async Task<ActionResult<Player>> DeletePlayer(int id)
+  {
+    var player = await context.Players.FindAsync(id);
+    if(player == null) return NotFound($"No existe el player con id {id}");
+    context.Players.Remove(player);
     await context.SaveChangesAsync();
     return NoContent();
   }
@@ -271,5 +315,19 @@ public class GamesController : ControllerBase
 
     await context.SaveChangesAsync();
     return Ok(game);
+  }
+
+  [HttpPut("updatePlayer")]
+  public async Task<ActionResult<Player>> UpdatePlayer([FromBody] Player updatePlayer)
+  {
+    var player = await context.Players.FindAsync(updatePlayer.Id);
+    if(player == null) return NotFound($"No existe el game con ID {updatePlayer.Id}");
+    
+    player.Nombre = updatePlayer.Nombre;
+    player.Especialidad = updatePlayer.Especialidad;
+    player.IdGames = updatePlayer.IdGames;
+
+    await context.SaveChangesAsync();
+    return Ok(player);
   }
 }
