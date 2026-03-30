@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: https://localhost:7020/api/Games/paginado?jugador=2
+  url: https://localhost:7020/api/Games/paginado?jugador=7
   params:
     - name: jugador
-      value: "2"
+      value: "7"
       type: query
   body:
     type: json
