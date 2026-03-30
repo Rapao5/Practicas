@@ -24,7 +24,6 @@ watch(
     filtros.value.game = parseInt(nuevaQuery.game) || null;
 
     await store.fetchPlayer(filtros.value, paginaActual.value);
-    console.log("JSON de los jugadores:", JSON.parse(JSON.stringify(store.players)));
   },
   { immediate: true }
 );
