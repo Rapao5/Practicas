@@ -39,7 +39,7 @@ useIntersectionObserver (
   <div class="text-center" v-if="store.games.length">
     <h1 class="text-2xl mb-4">¡Tus juegos favoritos hechos cartas!</h1>
     
-    <div v-bind="containerProps" style="height: 800px; overflow-y: auto; border: 1px solid #eee;">
+    <div v-bind="containerProps" style="height: 550px; overflow-y: auto; border: 1px solid #eee;">
       <div v-bind="wrapperProps">
         <div v-for="game in list" :key="game.index" style="height: 500px" class="flex items-center justify-center border-b">
          
