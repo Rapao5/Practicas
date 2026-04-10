@@ -21,7 +21,8 @@ public class EcosistemaService : IEcosistemaService
       Descripcion = e.Descripcion,
       AreaLatitud = e.AreaLatitud,
       AreaLongitud = e.AreaLongitud,
-      Conservacion = e.Conservacion.ToString()
+      Conservacion = e.Conservacion.ToString(),
+      Proyectos = e.Proyectos?.Select(p => p.Nombre).ToList() ?? new List<string>()
     }).ToList();
 
     return ecosistemasDTO;
@@ -39,7 +40,8 @@ public class EcosistemaService : IEcosistemaService
       Descripcion = ecosistema.Descripcion,
       AreaLatitud = ecosistema.AreaLatitud,
       AreaLongitud = ecosistema.AreaLongitud,
-      Conservacion = ecosistema.Conservacion.ToString()
+      Conservacion = ecosistema.Conservacion.ToString(),
+      Proyectos = ecosistema.Proyectos?.Select(p => p.Nombre).ToList() ?? new List<string>()
     };
 
     return ecosistemaDTO;

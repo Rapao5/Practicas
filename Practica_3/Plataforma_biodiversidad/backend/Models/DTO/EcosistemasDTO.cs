@@ -1,3 +1,5 @@
+using backend.proyecto;
+
 namespace backend.ecoDTO;
 
 public class EcosistemaDTO
@@ -7,5 +9,5 @@ public class EcosistemaDTO
   public required decimal AreaLatitud {get; set;}
   public required decimal AreaLongitud {get; set;}
   public string Conservacion {get; set;} = null!;
-  
+  public List<string> Proyectos { get; set; } = new List<string>();
 }

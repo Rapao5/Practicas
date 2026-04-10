@@ -17,11 +17,14 @@ public class EcosistemaRepository : IEcosistemaRepository
   {
     return await context.Ecosistemas
                         .AsNoTracking()
+                        .Include(e => e.Proyectos)
                         .ToListAsync();
   }
   public async Task<Ecosistema> GetByIdAsync(int id)
   {
-    return await context.Ecosistemas.FirstOrDefaultAsync(e => e.Id == id);
+    return await context.Ecosistemas
+                  .Include(e => e.Proyectos)
+                  .FirstOrDefaultAsync(e => e.Id == id);
   }
   public async Task AddAsync(Ecosistema ecosistema)
   {

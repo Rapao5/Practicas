@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using backend.proyecto;
 
 namespace backend.eco;
 
@@ -19,5 +20,5 @@ public class Ecosistema
   public required decimal AreaLatitud {get; set;}
   public required decimal AreaLongitud {get; set;}
   public Conservacion Conservacion {get; set;}
-  
+  public ICollection<Proyecto> Proyectos { get; set; } = new List<Proyecto>();
 }

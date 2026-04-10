@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using backend.asignaciones;
 using backend.eco;
-using backend.investigador;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace backend.proyecto;
