@@ -17,7 +17,6 @@ public class Proyecto
   public required bool Estado {get; set;}
   public required string EspecieFoco {get; set;}
   public int EcosistemaId {get; set;}
-  [ValidateNever]
-  public Ecosistema? Ecosistema {get; set;}
+  public Ecosistema Ecosistema {get; set;}
   public ICollection<Asignaciones> Asignaciones {get; set;} = new List<Asignaciones>();
 }

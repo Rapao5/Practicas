@@ -64,6 +64,10 @@ public AppDbContext() { }
                             .Property(p => p.EspecieFoco)
                             .HasColumnName("especieFoco")
                             .HasColumnType("varchar(100)");
+        modelBuilder.Entity<Proyecto>()
+                            .Property(p => p.EcosistemaId)
+                            .HasColumnName("especieFoco")
+                            .HasColumnType("varchar(100)");
 
         modelBuilder.Entity<Investigador>().ToTable("investigadores");
         modelBuilder.Entity<Investigador>()
