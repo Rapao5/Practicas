@@ -34,6 +34,24 @@ namespace backend.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "investigadores",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    nombreInvestigador = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    email = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    experiencia = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_investigadores", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "proyectos",
                 columns: table => new
                 {
@@ -44,35 +62,20 @@ namespace backend.Migrations
                     presupuesto = table.Column<float>(type: "float", nullable: false),
                     fechaInicio = table.Column<DateOnly>(type: "date", nullable: false),
                     fechaFinal = table.Column<DateOnly>(type: "date", nullable: false),
-                    estado = table.Column<ulong>(type: "bit", nullable: false)
+                    estado = table.Column<ulong>(type: "bit", nullable: false),
+                    especieFoco = table.Column<string>(type: "varchar(100)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ecosistemaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_proyectos", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "investigadores",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    nombreInvestigador = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    email = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    experiencia = table.Column<int>(type: "int", nullable: false),
-                    ProyectoId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_investigadores", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_investigadores_proyectos_ProyectoId",
-                        column: x => x.ProyectoId,
-                        principalTable: "proyectos",
-                        principalColumn: "Id");
+                        name: "FK_proyectos_ecosistemas_ecosistemaId",
+                        column: x => x.ecosistemaId,
+                        principalTable: "ecosistemas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -82,9 +85,8 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    rol = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FechaEntrada = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    rol = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    FechaEntrada = table.Column<DateOnly>(type: "date", nullable: false),
                     proyectoId = table.Column<int>(type: "int", nullable: false),
                     investigadorId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -117,9 +119,9 @@ namespace backend.Migrations
                 column: "proyectoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_investigadores_ProyectoId",
-                table: "investigadores",
-                column: "ProyectoId");
+                name: "IX_proyectos_ecosistemaId",
+                table: "proyectos",
+                column: "ecosistemaId");
         }
 
         /// <inheritdoc />
@@ -129,13 +131,13 @@ namespace backend.Migrations
                 name: "asiganciones");
 
             migrationBuilder.DropTable(
-                name: "ecosistemas");
-
-            migrationBuilder.DropTable(
                 name: "investigadores");
 
             migrationBuilder.DropTable(
                 name: "proyectos");
+
+            migrationBuilder.DropTable(
+                name: "ecosistemas");
         }
     }
 }

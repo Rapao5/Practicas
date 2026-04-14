@@ -7,9 +7,13 @@ namespace backend.Services;
 public class AsignacionesService : IAsignacionesService
 {
   private readonly IAsignacionesRepository repository;
-  public AsignacionesService(IAsignacionesRepository repository)
+  private readonly IInvestigadorRepository investigadorRepository;
+  private readonly IProyectoRepository proyectoRepository;
+  public AsignacionesService(IAsignacionesRepository repository, IInvestigadorRepository investigadorRepository, IProyectoRepository proyectoRepository)
   {
     this.repository=repository;
+    this.investigadorRepository=investigadorRepository;
+    this.proyectoRepository=proyectoRepository;
   }
 
   public async Task<IEnumerable<AsignacionesDTO>> ObtenerTodosAsync()
@@ -19,7 +23,7 @@ public class AsignacionesService : IAsignacionesService
     var asignacionesDTO = asignaciones.Select(a => new AsignacionesDTO
     {
       Id = a.Id,
-      Rol = a.Rol,
+      Rol = a.Rol.ToString(),
       FechaEntrada = a.FechaEntrada,
       ProyectoId = a.ProyectoId,
       InvestigadorId = a.InvestigadorId,
@@ -39,7 +43,7 @@ public class AsignacionesService : IAsignacionesService
     var asignacionDTO = new AsignacionesDTO
     {
       Id = asignacion.Id,
-      Rol = asignacion.Rol,
+      Rol = asignacion.Rol.ToString(),
       FechaEntrada = asignacion.FechaEntrada,
       ProyectoId = asignacion.ProyectoId,
       InvestigadorId = asignacion.InvestigadorId,
@@ -52,9 +56,26 @@ public class AsignacionesService : IAsignacionesService
 
   public async Task<AsignacionesDTO> CrearAsync(AsignacionesDTO dto)
   {
+    var investigador = await investigadorRepository.GetByIdAsync(dto.InvestigadorId);
+    if(investigador == null) throw new ArgumentException("El investigador no existe.");
+    var asignaciones = await repository.GetAsignacionesAsync();
+    foreach (var asig in asignaciones)
+    {
+      if(investigador.Id == asig.InvestigadorId)
+      {
+        var proyecto = await proyectoRepository.GetByIdAsync(asig.ProyectoId);
+        if(proyecto.Estado == true)
+        {
+          if(asig.Rol == 0)
+        {
+          throw new ArgumentException("El investigador ya es lider de campo en otro proyecto");
+        }
+        }
+      }
+    }
     var asignacion = new Asignaciones
     {
-      Rol = dto.Rol,
+      Rol = Enum.Parse<Rol>(dto.Rol),
       FechaEntrada = dto.FechaEntrada,
       ProyectoId = dto.ProyectoId,
       InvestigadorId = dto.InvestigadorId
@@ -68,13 +89,28 @@ public class AsignacionesService : IAsignacionesService
   public async Task UpdateAsync(int id, AsignacionesDTO dto)
   {
     if(id != dto.Id) return;
-
+    var investigador = await investigadorRepository.GetByIdAsync(dto.InvestigadorId);
+    if(investigador == null) throw new ArgumentException("El investigador no existe.");
+    var asignaciones = await repository.GetAsignacionesAsync();
+    foreach (var asig in asignaciones)
+    {
+      if(investigador.Id == asig.InvestigadorId && dto.Rol == "LiderCampo")
+      {
+        var proyecto = await proyectoRepository.GetByIdAsync(asig.ProyectoId);
+        if(proyecto.Estado == true)
+        {
+          if(asig.Rol == 0)
+        {
+          throw new ArgumentException("El investigador ya es lider de campo en otro proyecto");
+        }
+        }
+      }
+    }
     var nuevaAsignacion = await repository.GetByIdAsync(dto.Id);
-
     if(nuevaAsignacion == null) return;
 
       nuevaAsignacion.Id = dto.Id;
-      nuevaAsignacion.Rol = dto.Rol;
+      nuevaAsignacion.Rol = Enum.Parse<Rol>(dto.Rol);
       nuevaAsignacion.FechaEntrada= dto.FechaEntrada;
       nuevaAsignacion.ProyectoId = dto.ProyectoId;
       nuevaAsignacion.InvestigadorId = dto.InvestigadorId;
@@ -91,7 +127,7 @@ public class AsignacionesService : IAsignacionesService
     await repository.Delete(id);
   }
 
-  public async Task<IEnumerable<AsignacionesDTO>> BuscarPorRolAsync(string rol)
+  public async Task<IEnumerable<AsignacionesDTO>> BuscarPorRolAsync(Rol rol)
   {
     var asignaciones = await repository.GetRol(rol);
     
@@ -100,7 +136,7 @@ public class AsignacionesService : IAsignacionesService
     var asignacionesDTO = asignaciones.Select(a => new AsignacionesDTO
     {
       Id = a.Id,
-      Rol = a.Rol,
+      Rol = a.Rol.ToString(),
       FechaEntrada = a.FechaEntrada,
       ProyectoId = a.ProyectoId,
       InvestigadorId = a.InvestigadorId,
@@ -120,7 +156,7 @@ public class AsignacionesService : IAsignacionesService
     var asignacionesDTO = asignaciones.Select(a => new AsignacionesDTO
     {
       Id = a.Id,
-      Rol = a.Rol,
+      Rol = a.Rol.ToString(),
       FechaEntrada = a.FechaEntrada,
       ProyectoId = a.ProyectoId,
       InvestigadorId = a.InvestigadorId,

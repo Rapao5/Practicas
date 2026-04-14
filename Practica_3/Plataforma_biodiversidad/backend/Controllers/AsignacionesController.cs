@@ -1,3 +1,4 @@
+using backend.asignaciones;
 using backend.asignacionesDTO;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -33,16 +34,30 @@ public class AsignacionesController : ControllerBase
   [HttpPost]
   public async Task<ActionResult<AsignacionesDTO>> AddAsync(AsignacionesDTO dto)
   {
-    var nuevaAsignacion = await service.CrearAsync(dto);
+    try
+    {
+      var nuevaAsignacion = await service.CrearAsync(dto);
     return CreatedAtAction(nameof(GetById), new {id = nuevaAsignacion.Id}, nuevaAsignacion);
+    }
+    catch (ArgumentException ex)
+    {
+      return BadRequest(ex.Message);
+    }
   }
 
   [HttpPut("{id}")]
   public async Task<ActionResult> Update(int id, AsignacionesDTO dto)
   {
-    if(id != dto.Id) return BadRequest("Los Ids no coinciden.");
-    await service.UpdateAsync(id, dto);
-    return NoContent();
+    try
+    {
+      if(id != dto.Id) return BadRequest("Los Ids no coinciden.");
+      await service.UpdateAsync(id, dto);
+      return NoContent();
+    }
+    catch (ArgumentException ex)
+    {
+      return BadRequest(ex.Message);
+    }
   }
 
 [HttpDelete("{id}")]
@@ -53,7 +68,7 @@ public class AsignacionesController : ControllerBase
   }
 
   [HttpGet("rol/{rol}")]
-  public async Task<ActionResult<IEnumerable<AsignacionesDTO>>> GetRol(string rol)
+  public async Task<ActionResult<IEnumerable<AsignacionesDTO>>> GetRol(Rol rol)
   {
     var lista = await service.BuscarPorRolAsync(rol);
     return Ok(lista);

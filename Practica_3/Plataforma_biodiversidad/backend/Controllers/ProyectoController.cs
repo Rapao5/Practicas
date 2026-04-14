@@ -32,16 +32,30 @@ public class ProyectoController : ControllerBase
   [HttpPost]
   public async Task<ActionResult<ProyectoDTO>> Post(ProyectoDTO dto)
   {
-    var nuevoPro = await service.CrearAsync(dto);
-    return CreatedAtAction(nameof(GetId), new {id = nuevoPro.Id}, nuevoPro);
+    try
+    {
+      var nuevoPro = await service.CrearAsync(dto);
+      return CreatedAtAction(nameof(GetId), new {id = nuevoPro.Id}, nuevoPro);
+    }
+    catch(ArgumentException ex)
+    {
+      return BadRequest(ex.Message);
+    }
   }
   
   [HttpPut("{id}")]
   public async Task<ActionResult> Update(int id, ProyectoDTO dto)
   {
-    if(id != dto.Id) return BadRequest("Los Ids no coinciden.");
-    await service.UpdateAsync(id, dto);
-    return NoContent();
+    try
+    {
+      if(id != dto.Id) return BadRequest("Los Ids no coinciden.");
+      await service.UpdateAsync(id, dto);
+      return NoContent();
+    }
+    catch (ArgumentException ex)
+    {
+      return BadRequest(ex.Message);
+    }
   }
 
   [HttpDelete("{id}")]

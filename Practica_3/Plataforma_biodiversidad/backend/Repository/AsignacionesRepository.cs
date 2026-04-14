@@ -16,17 +16,17 @@ public class AsignacionesRepository : IAsignacionesRepository
   public async Task<IEnumerable<Asignaciones>> GetAsignacionesAsync()
   {
     return await context.Asignaciones
-                        .AsNoTracking()
                         .Include(a => a.Proyecto)
                         .Include(a => a.Investigador)
+                        .AsNoTracking()
                         .ToArrayAsync();
   }
   public async Task<Asignaciones> GetByIdAsync(int id)
   {
     return await context.Asignaciones
-                        .AsNoTracking()
                         .Include(a => a.Proyecto)
                         .Include(a => a.Investigador)
+                        .AsNoTracking()
                         .FirstOrDefaultAsync(a => a.Id == id);
   }
   public async Task AddAsync(Asignaciones asignaciones)
@@ -40,10 +40,11 @@ public class AsignacionesRepository : IAsignacionesRepository
   }
   public async Task Update(Asignaciones asignaciones)
   {
+    
     context.Asignaciones.Update(asignaciones);
     await context.SaveChangesAsync();
   }
-  public async Task<IEnumerable<Asignaciones>> GetRol(string rol)
+  public async Task<IEnumerable<Asignaciones>> GetRol(Rol rol)
   {
     return await context.Asignaciones
                         .AsNoTracking()

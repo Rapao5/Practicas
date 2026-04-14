@@ -12,15 +12,15 @@ using backend.appDbContext;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260330114517_AddEspecieFocoCorrecto")]
-    partial class AddEspecieFocoCorrecto
+    [Migration("20260413083814_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.0-preview.2.25163.8")
+                .HasAnnotation("ProductVersion", "9.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -33,8 +33,8 @@ namespace backend.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("FechaEntrada")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateOnly>("FechaEntrada")
+                        .HasColumnType("date");
 
                     b.Property<int>("InvestigadorId")
                         .HasColumnType("int")
@@ -44,10 +44,9 @@ namespace backend.Migrations
                         .HasColumnType("int")
                         .HasColumnName("proyectoId");
 
-                    b.Property<string>("Rol")
-                        .IsRequired()
+                    b.Property<int>("Rol")
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("int")
                         .HasColumnName("rol");
 
                     b.HasKey("Id");
@@ -114,12 +113,7 @@ namespace backend.Migrations
                         .HasColumnType("varchar(200)")
                         .HasColumnName("nombreInvestigador");
 
-                    b.Property<int?>("ProyectoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProyectoId");
 
                     b.ToTable("investigadores", (string)null);
                 });
@@ -131,6 +125,10 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EcosistemaId")
+                        .HasColumnType("int")
+                        .HasColumnName("ecosistemaId");
 
                     b.Property<string>("EspecieFoco")
                         .IsRequired()
@@ -161,19 +159,21 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EcosistemaId");
+
                     b.ToTable("proyectos", (string)null);
                 });
 
             modelBuilder.Entity("backend.asignaciones.Asignaciones", b =>
                 {
                     b.HasOne("backend.investigador.Investigador", "Investigador")
-                        .WithMany()
+                        .WithMany("Asignaciones")
                         .HasForeignKey("InvestigadorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("backend.proyecto.Proyecto", "Proyecto")
-                        .WithMany()
+                        .WithMany("Asignaciones")
                         .HasForeignKey("ProyectoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -183,16 +183,30 @@ namespace backend.Migrations
                     b.Navigation("Proyecto");
                 });
 
+            modelBuilder.Entity("backend.proyecto.Proyecto", b =>
+                {
+                    b.HasOne("backend.eco.Ecosistema", "Ecosistema")
+                        .WithMany("Proyectos")
+                        .HasForeignKey("EcosistemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ecosistema");
+                });
+
+            modelBuilder.Entity("backend.eco.Ecosistema", b =>
+                {
+                    b.Navigation("Proyectos");
+                });
+
             modelBuilder.Entity("backend.investigador.Investigador", b =>
                 {
-                    b.HasOne("backend.proyecto.Proyecto", null)
-                        .WithMany("Investigadores")
-                        .HasForeignKey("ProyectoId");
+                    b.Navigation("Asignaciones");
                 });
 
             modelBuilder.Entity("backend.proyecto.Proyecto", b =>
                 {
-                    b.Navigation("Investigadores");
+                    b.Navigation("Asignaciones");
                 });
 #pragma warning restore 612, 618
         }

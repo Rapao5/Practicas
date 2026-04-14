@@ -1,4 +1,3 @@
-using backend.eco;
 using backend.ecoDTO;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -42,9 +41,16 @@ public class EcosistemaController : ControllerBase
   public async Task<ActionResult<EcosistemaDTO>> Update(int id, EcosistemaDTO dto)
   {
 
-    if(id != dto.Id) return BadRequest("Los Ids no coinciden.");
-    await service.UpdateAsync(id, dto);
-    return NoContent();
+    try
+    {
+      if(id != dto.Id) return BadRequest("Los Ids no coinciden.");
+      await service.UpdateAsync(id, dto);
+      return NoContent();
+    }
+    catch (ArgumentException ex)
+    {
+      return BadRequest(ex.Message);
+    }
   }
 
   [HttpDelete("{id}")]

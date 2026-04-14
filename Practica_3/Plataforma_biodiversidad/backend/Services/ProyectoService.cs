@@ -7,10 +7,12 @@ namespace backend.Services;
 public class ProyectoService : IProyectoService
 {
   private readonly IProyectoRepository repository;
+  private readonly IEcosistemaRepository ecosistemaRepository;
 
-  public ProyectoService(IProyectoRepository repository)
+  public ProyectoService(IProyectoRepository repository, IEcosistemaRepository ecosistemaRepository)
   {
     this.repository = repository;
+    this.ecosistemaRepository = ecosistemaRepository;
   }
 
   public async Task<IEnumerable<ProyectoDTO>> ObtenerTodosAsync()
@@ -56,6 +58,12 @@ public class ProyectoService : IProyectoService
 
   public async Task<ProyectoDTO> CrearAsync(ProyectoDTO dto)
   {
+    var ecosistema = await ecosistemaRepository.GetByIdAsync(dto.EcosistemaId);
+    if(dto.Presupuesto < 0) throw new ArgumentException("El presupuesto del proyecto es menor a 0.");
+    if(dto.FechaFinal < dto.FechaInicio) throw new ArgumentException("La fecha final no puede ser anterior a la inicial (No es una máquina de tiempo).");
+    if(ecosistema == null) throw new ArgumentException("El ecosistema no existe.");
+    if(ecosistema.Conservacion==0) throw new ArgumentException("No se puede asignar un proyecto en un ecosistema intacto");
+
     var nuevoProyecto = new Proyecto
     {
       Nombre = dto.Nombre,
@@ -75,7 +83,11 @@ public class ProyectoService : IProyectoService
   public async Task UpdateAsync(int id, ProyectoDTO dto)
   {
     if (id != dto.Id) return;
-
+    var ecosistema = await ecosistemaRepository.GetByIdAsync(dto.EcosistemaId);
+    if(dto.Presupuesto < 0) throw new ArgumentException("El presupuesto del proyecto es menor a 0.");
+    if(dto.FechaFinal < dto.FechaInicio) throw new ArgumentException("La fecha final no puede ser anterior a la inicial (No es una máquina de tiempo).");
+    if(ecosistema == null) throw new ArgumentException("El ecosistema no existe.");
+    if(ecosistema.Conservacion==0) throw new ArgumentException("No se puede asignar un proyecto en un ecosistema intacto");
     var nuevoProyecto = await repository.GetByIdAsync(id);
     if(nuevoProyecto==null) return;
 

@@ -33,6 +33,16 @@ builder.Services.AddScoped<IInvestigadorService, InvestigadorService>();
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowVueApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") // La dirección de tu frontend
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -44,6 +54,7 @@ if (app.Environment.IsDevelopment())
     // app.UseSwaggerUI();
 }
 
+app.UseCors("AllowVueApp");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

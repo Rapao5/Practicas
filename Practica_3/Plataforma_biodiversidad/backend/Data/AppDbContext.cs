@@ -37,7 +37,7 @@ public AppDbContext() { }
         modelBuilder.Entity<Ecosistema>()
                             .Property(p => p.Conservacion)
                             .HasColumnName("conservacion")
-                            .HasColumnType("bit");
+                            .HasColumnType("int");
 
         modelBuilder.Entity<Proyecto>().ToTable("proyectos");
         modelBuilder.Entity<Proyecto>()
@@ -66,8 +66,12 @@ public AppDbContext() { }
                             .HasColumnType("varchar(100)");
         modelBuilder.Entity<Proyecto>()
                             .Property(p => p.EcosistemaId)
-                            .HasColumnName("especieFoco")
-                            .HasColumnType("varchar(100)");
+                            .HasColumnName("ecosistemaId")
+                            .HasColumnType("int");
+        modelBuilder.Entity<Proyecto>()
+                            .HasOne(p => p.Ecosistema)
+                            .WithMany(e => e.Proyectos)
+                            .HasForeignKey(p => p.EcosistemaId);
 
         modelBuilder.Entity<Investigador>().ToTable("investigadores");
         modelBuilder.Entity<Investigador>()
@@ -87,7 +91,7 @@ public AppDbContext() { }
         modelBuilder.Entity<Asignaciones>()
                             .Property(p => p.Rol)
                             .HasColumnName("rol")
-                            .HasColumnType("varchar(50)");
+                            .HasColumnType("int");
         modelBuilder.Entity<Asignaciones>()
                             .Property(p => p.ProyectoId)
                             .HasColumnName("proyectoId")
@@ -96,5 +100,13 @@ public AppDbContext() { }
                             .Property(p => p.InvestigadorId)
                             .HasColumnName("investigadorId")
                             .HasColumnType("int");
+        modelBuilder.Entity<Asignaciones>()
+                            .HasOne(a => a.Proyecto)
+                            .WithMany(p => p.Asignaciones)
+                            .HasForeignKey(a => a.ProyectoId);
+        modelBuilder.Entity<Asignaciones>()
+                            .HasOne(a => a.Investigador)
+                            .WithMany(i => i.Asignaciones)
+                            .HasForeignKey(a => a.InvestigadorId);
     }
 }

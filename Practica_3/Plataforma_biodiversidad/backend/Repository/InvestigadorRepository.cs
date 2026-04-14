@@ -24,6 +24,7 @@ public class InvestigadorRepository : IInvestigadorRepository
   public async Task<Investigador> GetByIdAsync(int id)
   {
     return await context.Investigadores
+                        .AsNoTracking()
                         .Include(i => i.Asignaciones) 
                             .ThenInclude(a => a.Proyecto) 
                         .FirstOrDefaultAsync(i => i.Id == id);
