@@ -44,6 +44,13 @@ public class AsignacionesRepository : IAsignacionesRepository
     context.Asignaciones.Update(asignaciones);
     await context.SaveChangesAsync();
   }
+  public async Task<IEnumerable<Asignaciones>> ObtenerPorProyectoAsync(int proyectoId)
+  {
+    return await context.Asignaciones
+                        .Include(a => a.Investigador)
+                        .Where(a => a.ProyectoId == proyectoId)
+                        .ToListAsync();
+  }
   public async Task<IEnumerable<Asignaciones>> GetRol(Rol rol)
   {
     return await context.Asignaciones

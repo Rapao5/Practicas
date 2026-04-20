@@ -12,4 +12,5 @@ public class ProyectoDTO
   public int EcosistemaId {get; set;}
   public string Ecosistema {get; set;} = null!;
   public List<string> Investigadores {get; set;} = new();
+  public List<string> InvestigadoresRol {get; set;} = new();
 }

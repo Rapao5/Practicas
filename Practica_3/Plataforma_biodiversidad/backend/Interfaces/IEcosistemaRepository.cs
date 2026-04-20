@@ -6,6 +6,7 @@ public interface IEcosistemaRepository
 {
   Task<IEnumerable<Ecosistema>> GetEcosistemaAsync();
   Task<Ecosistema> GetByIdAsync(int id);
+  Task<Ecosistema> GetByIdBasicAsync(int id);
   Task AddAsync(Ecosistema ecosistema);
   Task Delete(int id);
   Task Update(Ecosistema ecosistema);

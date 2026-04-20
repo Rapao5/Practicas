@@ -26,6 +26,11 @@ public class EcosistemaRepository : IEcosistemaRepository
                   .Include(e => e.Proyectos)
                   .FirstOrDefaultAsync(e => e.Id == id);
   }
+  public async Task<Ecosistema> GetByIdBasicAsync(int id)
+  {
+    return await context.Ecosistemas
+                  .FirstOrDefaultAsync(e => e.Id == id);
+  }
   public async Task AddAsync(Ecosistema ecosistema)
   {
     await context.Ecosistemas.AddAsync(ecosistema);

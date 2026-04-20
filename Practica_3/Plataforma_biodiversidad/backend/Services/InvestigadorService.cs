@@ -20,6 +20,7 @@ public class InvestigadorService : IInvestigadorService
       Nombre = i.Nombre,
       Email = i.Email,
       Experiencia = i.Experiencia.ToString(),
+      Asignaciones = i.Asignaciones?.Select(a => a.Rol.ToString()).ToList() ?? new List<string>(),
       Proyectos = i.Asignaciones?.Select(a => a.Proyecto?.Nombre).ToList() ?? new List<string>()
     }).ToList();
 
@@ -36,6 +37,7 @@ public class InvestigadorService : IInvestigadorService
       Nombre = investigador.Nombre,
       Email = investigador.Email,
       Experiencia = investigador.Experiencia.ToString(),
+      Asignaciones = investigador.Asignaciones?.Select(a => a.Rol.ToString()).ToList() ?? new List<string>(),
       Proyectos = investigador.Asignaciones?.Select(a => a.Proyecto?.Nombre).ToList() ?? new List<string>()
     };
     
@@ -89,6 +91,7 @@ public class InvestigadorService : IInvestigadorService
       Nombre = i.Nombre,
       Email = i.Email,
       Experiencia = i.Experiencia.ToString(),
+      Asignaciones = i.Asignaciones?.Select(a => a.Rol.ToString()).ToList() ?? new List<string>(),
       Proyectos = i.Asignaciones?.Select(a => a.Proyecto.Nombre).ToList() ?? new List<string>()
     });
 
@@ -105,6 +108,7 @@ public class InvestigadorService : IInvestigadorService
       Nombre = i.Nombre,
       Email = i.Email,
       Experiencia = i.Experiencia.ToString(),
+      Asignaciones = i.Asignaciones?.Select(a => a.Rol.ToString()).ToList() ?? new List<string>(),
       Proyectos = i.Asignaciones?.Select(p => p.Proyecto.Nombre).ToList() ?? new List<string>()
     });
 
@@ -122,6 +126,7 @@ public class InvestigadorService : IInvestigadorService
       Nombre = i.Nombre,
       Email = i.Email,
       Experiencia = i.Experiencia.ToString(),
+      Asignaciones = i.Asignaciones?.Select(a => a.Rol.ToString()).ToList() ?? new List<string>(),
       Proyectos = i.Asignaciones?.Select(p => p.Proyecto.Nombre).ToList() ?? new List<string>()
     });
 

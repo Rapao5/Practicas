@@ -9,6 +9,7 @@ public interface IAsignacionesRepository
   Task AddAsync(Asignaciones asignaciones);
   Task Delete(int id);
   Task Update(Asignaciones asignaciones);
+  Task<IEnumerable<Asignaciones>> ObtenerPorProyectoAsync(int proyectoId);
   Task<IEnumerable<Asignaciones>> GetRol(Rol rol);
   Task<IEnumerable<Asignaciones>> GetFechaEntrada(DateOnly fecha);
 

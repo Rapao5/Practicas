@@ -60,11 +60,18 @@ public class AsignacionesController : ControllerBase
     }
   }
 
-[HttpDelete("{id}")]
+  [HttpDelete("{id}")]
   public async Task<ActionResult> Delete(int id)
   {
     await service.DeleteAsync(id);
     return NoContent();
+  }
+
+  [HttpGet("proyecto/{proyectoId}")]
+  public async Task<ActionResult<IEnumerable<AsignacionesDTO>>> GetAsignacionesByProyecto(int proyectoId)
+  {
+    var lista =  await service.MostrarPorProyecto(proyectoId);
+    return Ok(lista);
   }
 
   [HttpGet("rol/{rol}")]

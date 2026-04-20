@@ -29,7 +29,8 @@ public class ProyectoService : IProyectoService
       Estado = p.Estado,
       EspecieFoco = p.EspecieFoco,
       Ecosistema = p.Ecosistema?.Descripcion,
-      Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList()
+      Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
+      InvestigadoresRol = p.Asignaciones.Select(a => a.Rol.ToString()).ToList()
     }).ToList();
     
     return proyectoDTO;
@@ -51,14 +52,15 @@ public class ProyectoService : IProyectoService
       Estado = proyecto .Estado,
       EspecieFoco = proyecto .EspecieFoco,
       Ecosistema = proyecto .Ecosistema?.Descripcion,
-      Investigadores = proyecto .Asignaciones.Select(a => a.Investigador.Nombre).ToList()
+      Investigadores = proyecto .Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
+      InvestigadoresRol = proyecto.Asignaciones.Select(a => a.Rol.ToString()).ToList()
     };
     return proyectoDTO;
   }
 
   public async Task<ProyectoDTO> CrearAsync(ProyectoDTO dto)
   {
-    var ecosistema = await ecosistemaRepository.GetByIdAsync(dto.EcosistemaId);
+    var ecosistema = await ecosistemaRepository.GetByIdBasicAsync(dto.EcosistemaId);
     if(dto.Presupuesto < 0) throw new ArgumentException("El presupuesto del proyecto es menor a 0.");
     if(dto.FechaFinal < dto.FechaInicio) throw new ArgumentException("La fecha final no puede ser anterior a la inicial (No es una máquina de tiempo).");
     if(ecosistema == null) throw new ArgumentException("El ecosistema no existe.");
@@ -125,7 +127,8 @@ public class ProyectoService : IProyectoService
       Estado = p.Estado,
       EspecieFoco = p.EspecieFoco,
       Ecosistema = p.Ecosistema?.Descripcion,
-      Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList()
+      Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
+      InvestigadoresRol = p.Asignaciones.Select(a => a.Rol.ToString()).ToList()
     }).ToList();
 
     return proyectoDTO;
@@ -147,7 +150,8 @@ public class ProyectoService : IProyectoService
       Estado = p.Estado,
       EspecieFoco = p.EspecieFoco,
       Ecosistema = p.Ecosistema?.Descripcion,
-      Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList()
+      Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
+      InvestigadoresRol = p.Asignaciones.Select(a => a.Rol.ToString()).ToList()
     }).ToList();
     
     return proyectoDTO;
@@ -167,7 +171,8 @@ public class ProyectoService : IProyectoService
       Estado = p.Estado,
       EspecieFoco = p.EspecieFoco,
       Ecosistema = p.Ecosistema?.Descripcion,
-      Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList()
+      Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
+      InvestigadoresRol = p.Asignaciones.Select(a => a.Rol.ToString()).ToList()
     }).ToList();
 
     return proyectoDTO;

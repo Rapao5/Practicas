@@ -10,6 +10,7 @@ public interface IAsignacionesService
   Task<AsignacionesDTO> CrearAsync(AsignacionesDTO dto);
   Task UpdateAsync(int id, AsignacionesDTO dto);
   Task DeleteAsync(int id);
+  Task<IEnumerable<AsignacionesDTO>> MostrarPorProyecto(int proyectoId);
   Task<IEnumerable<AsignacionesDTO>> BuscarPorRolAsync(Rol rol);
   Task<IEnumerable<AsignacionesDTO>> BuscarPorFechaEntrada(DateOnly fecha);
 }

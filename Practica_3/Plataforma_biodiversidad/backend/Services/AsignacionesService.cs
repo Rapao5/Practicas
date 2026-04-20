@@ -66,7 +66,11 @@ public class AsignacionesService : IAsignacionesService
         var proyecto = await proyectoRepository.GetByIdAsync(asig.ProyectoId);
         if(proyecto.Estado == true)
         {
-          if(asig.Rol == 0)
+          if (asig.ProyectoId == dto.ProyectoId)
+          {
+            throw new ArgumentException("El investigador ya está asignado en este proyecto");
+          }
+          if(asig.Rol == 0 && dto.ProyectoId == asig.ProyectoId)
         {
           throw new ArgumentException("El investigador ya es lider de campo en otro proyecto");
         }
@@ -99,7 +103,7 @@ public class AsignacionesService : IAsignacionesService
         var proyecto = await proyectoRepository.GetByIdAsync(asig.ProyectoId);
         if(proyecto.Estado == true)
         {
-          if(asig.Rol == 0)
+          if(asig.Rol == 0 && dto.ProyectoId == asig.ProyectoId)
         {
           throw new ArgumentException("El investigador ya es lider de campo en otro proyecto");
         }
@@ -125,6 +129,26 @@ public class AsignacionesService : IAsignacionesService
     if(asignacion == null) return;
 
     await repository.Delete(id);
+  }
+
+  public async Task<IEnumerable<AsignacionesDTO>> MostrarPorProyecto(int proyectoId)
+  {
+    var asignaciones = await repository.ObtenerPorProyectoAsync(proyectoId);
+
+    if(asignaciones == null ) return Enumerable.Empty<AsignacionesDTO>();
+
+     var asignacionesDTO = asignaciones.Select(a => new AsignacionesDTO
+    {
+      Id = a.Id,
+      Rol = a.Rol.ToString(),
+      FechaEntrada = a.FechaEntrada,
+      ProyectoId = a.ProyectoId,
+      InvestigadorId = a.InvestigadorId,
+      Proyecto = a.Proyecto?.Nombre,
+      Investigador = a.Investigador?.Nombre
+    }).ToList();
+
+    return asignacionesDTO;
   }
 
   public async Task<IEnumerable<AsignacionesDTO>> BuscarPorRolAsync(Rol rol)
