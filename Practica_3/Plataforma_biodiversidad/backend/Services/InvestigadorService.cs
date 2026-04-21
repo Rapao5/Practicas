@@ -11,6 +11,20 @@ public class InvestigadorService : IInvestigadorService
   {
     this.repository=repository;
   }
+  public async Task<IEnumerable<InvestigadorDTO>> ObtenerTodosPaginadosAsync(int skip, int take)
+  {
+    var investigadores = await repository.GetInvestigadoresPaginadosAsync(skip, take);
+
+    return investigadores.Select(i => new InvestigadorDTO
+    {
+      Id=i.Id,
+      Nombre = i.Nombre,
+      Email = i.Email,
+      Experiencia = i.Experiencia.ToString(),
+      Asignaciones = i.Asignaciones?.Select(a => a.Rol.ToString()).ToList() ?? new List<string>(),
+      Proyectos = i.Asignaciones?.Select(a => a.Proyecto?.Nombre).ToList() ?? new List<string>()
+    }).ToList();
+  }
   public async Task<IEnumerable<InvestigadorDTO>> ObtenerTodosAsync()
   {
     var investigadores = await repository.GetInvestigadorAsync();

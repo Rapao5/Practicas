@@ -4,6 +4,7 @@ namespace backend.Interfaces;
 
 public interface IInvestigadorRepository
 {
+  Task<IEnumerable<Investigador>> GetInvestigadoresPaginadosAsync(int skip, int take);
   Task<IEnumerable<Investigador>> GetInvestigadorAsync();
   Task<Investigador> GetByIdAsync(int id);
   Task AddAsync(Investigador investigador);

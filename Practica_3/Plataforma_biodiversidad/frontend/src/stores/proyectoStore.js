@@ -14,6 +14,23 @@ export const useProyectoStore = defineStore('proyectos', {
   },
 
   actions: {
+    async fetchProyectosPaginados(skip, take) {
+    try {
+      const response = await api.get(`/proyecto/paginados?skip=${skip}&take=${take}`);
+      const nuevosProyectos = response.data;
+
+      if (skip === 0) {
+        this.proyectoList = nuevosProyectos;
+      } else {
+        this.proyectoList.push(...nuevosProyectos);
+      }
+      
+      return nuevosProyectos.length;
+    } catch (error) {
+      console.error("Error al cargar proyectos paginados", error);
+      return 0;
+    }
+  },
     async fetchProyectos() {
         this.cargando = true;
         this.error = null;

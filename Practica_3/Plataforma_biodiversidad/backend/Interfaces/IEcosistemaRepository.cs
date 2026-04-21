@@ -4,6 +4,7 @@ namespace backend.Interfaces;
 
 public interface IEcosistemaRepository
 {
+  Task<IEnumerable<Ecosistema>> GetEcosistemasPaginadosAsync(int skip, int take);
   Task<IEnumerable<Ecosistema>> GetEcosistemaAsync();
   Task<Ecosistema> GetByIdAsync(int id);
   Task<Ecosistema> GetByIdBasicAsync(int id);

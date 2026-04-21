@@ -14,6 +14,23 @@ export const useInvestigadorStore = defineStore('investigadores', {
   },
 
   actions: {
+    async fetchInvestigadoresPaginados(skip, take){
+      try {
+        const response = await api.get(`investigador/paginados?skip=${skip}&take=${take}`);
+        const nuevoInvestigadores = response.data;
+
+        if (skip === 0) {
+          this.investigadorList = nuevoInvestigadores;
+        } else {
+          this.investigadorList.push(...nuevoInvestigadores);
+        }
+
+        return nuevoInvestigadores.length;
+      } catch (error) {
+        console.error("Error al cargar los investigadores paginados", error)
+        return 0;
+      }
+    },
     async fetchInvestigadores() {
         this.cargando = true;
         this.error = null;

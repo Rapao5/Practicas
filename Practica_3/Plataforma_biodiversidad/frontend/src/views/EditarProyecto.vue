@@ -16,13 +16,13 @@ onMounted(async () => {
 });
 
 const volver = async (datos) => {
-  router.push(`/mostrarProyecto/${idUrl}`)
+  router.push(`/proyecto`)
 }
 
 const handleActualizar = async (datos) => {
   const exito = await store.updateProyecto(idUrl, datos);
   if(exito){
-    router.push(`/mostrarProyecto/${idUrl}`);
+    router.push(`/proyecto`);
   }
 }
 </script>

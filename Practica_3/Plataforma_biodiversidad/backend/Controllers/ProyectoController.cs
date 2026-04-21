@@ -14,6 +14,12 @@ public class ProyectoController : ControllerBase
   {
     this.service=service;
   }
+  [HttpGet("paginados")]
+  public async Task<ActionResult<IEnumerable<ProyectoDTO>>> GetProyectos([FromQuery] int skip = 0, [FromQuery] int take = 10)
+  {
+      var proyectos = await service.ObtenerTodosPaginadosAsync(skip, take);
+      return Ok(proyectos);
+  }
   [HttpGet]
   public async Task<ActionResult<IEnumerable<ProyectoDTO>>> Get()
   {

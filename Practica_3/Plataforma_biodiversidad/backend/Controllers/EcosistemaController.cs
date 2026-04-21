@@ -15,6 +15,13 @@ public class EcosistemaController : ControllerBase
     this.service = service;
   }
 
+  [HttpGet("paginados")]
+  public async Task<ActionResult<IEnumerable<EcosistemaDTO>>> GetEcosistemas([FromQuery] int skip = 0, [FromQuery] int take = 10)
+  {
+    var ecosistemas = await service.ObtenerTodosPaginadosAsync(skip, take);
+    return Ok(ecosistemas);
+  }
+
   [HttpGet]
   public async Task<ActionResult<IEnumerable<EcosistemaDTO>>> Get()
   {

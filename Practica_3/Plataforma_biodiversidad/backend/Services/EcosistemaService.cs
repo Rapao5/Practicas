@@ -11,6 +11,20 @@ public class EcosistemaService : IEcosistemaService
   {
     this.repository = repository;
   }
+  public async Task<IEnumerable<EcosistemaDTO>> ObtenerTodosPaginadosAsync(int skip, int take)
+  {
+    var ecosistemas = await repository.GetEcosistemasPaginadosAsync(skip, take);
+
+    return ecosistemas.Select(e => new EcosistemaDTO
+    {
+      Id = e.Id,
+      Descripcion = e.Descripcion,
+      AreaLatitud = e.AreaLatitud,
+      AreaLongitud = e.AreaLongitud,
+      Conservacion = e.Conservacion.ToString(),
+      Proyectos = e.Proyectos?.Select(p => p.Nombre).ToList() ?? new List<string>()
+    }).ToList();
+  }
   public async Task<IEnumerable<EcosistemaDTO>> ObtenerTodosAsync()
   {
     var ecosistemas = await repository.GetEcosistemaAsync();

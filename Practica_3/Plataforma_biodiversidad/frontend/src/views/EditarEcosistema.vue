@@ -12,7 +12,7 @@ const idUrl = route.params.id;
 const ecosistema = computed(() => store.ecosistemaActual);
 
 const volver = async (datos) => {
-  router.push(`/mostrarEcosistema/${idUrl}`)
+  router.push(`/ecosistema`)
 }
 
 onMounted(async () => {

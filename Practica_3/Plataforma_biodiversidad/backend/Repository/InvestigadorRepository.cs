@@ -13,6 +13,16 @@ public class InvestigadorRepository : IInvestigadorRepository
   {
     this.context = context;
   }
+  public async Task<IEnumerable<Investigador>> GetInvestigadoresPaginadosAsync(int skip, int take)
+  {
+    return await context.Investigadores
+                        .Include(i => i.Asignaciones) 
+                            .ThenInclude(a => a.Proyecto)
+                          .OrderBy(p => p.Nombre) 
+                        .Skip(skip)            
+                        .Take(take)           
+                        .ToListAsync();
+  }
   public async Task<IEnumerable<Investigador>> GetInvestigadorAsync()
   {
     return await context.Investigadores

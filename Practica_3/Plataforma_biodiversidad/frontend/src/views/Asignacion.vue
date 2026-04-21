@@ -2,13 +2,18 @@
 import { onMounted, ref } from 'vue';
 import { useAsignacionStore } from '../stores/asignacionStore';
 import { useProyectoStore } from '../stores/proyectoStore';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
+const router = useRouter();
 const store = useAsignacionStore();
 const proStore = useProyectoStore();
 const idUrl = route.params.id;
 const proyecto = ref({ nombre: 'Cargando...' });
+
+const volver = async () => {
+  router.push(`/proyecto`)
+}
 
 onMounted(async () => {
   await store.fetchAsignacionesByProyecto(idUrl);
@@ -48,6 +53,7 @@ const handleEliminar = async (asignacionId) => {
             <button class="btn bg-emerald-500">Añadir asignación</button>
         </RouterLink>
     </header>
+    <button class="btn m-2 bg-emerald-500" @click="volver">Volver</button>
     <div class="grid grid-cols-1 gap-6">
       <div v-for="(asignacion, index) in store.asignacionListProyecto" 
         :key="asignacion.id || index" 

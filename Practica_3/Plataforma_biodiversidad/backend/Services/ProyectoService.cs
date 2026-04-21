@@ -15,6 +15,24 @@ public class ProyectoService : IProyectoService
     this.ecosistemaRepository = ecosistemaRepository;
   }
 
+  public async Task<IEnumerable<ProyectoDTO>> ObtenerTodosPaginadosAsync(int skip, int take)
+  {
+    var proyectos = await repository.GetProyectosPaginadosAsync(skip, take);
+
+    return proyectos.Select(p => new ProyectoDTO
+    {
+      Id = p.Id,
+      Nombre = p.Nombre,
+      Presupuesto = p.Presupuesto,
+      FechaInicio = p.FechaInicio,
+      FechaFinal = p.FechaFinal,
+      Estado = p.Estado,
+      EspecieFoco = p.EspecieFoco,
+      Ecosistema = p.Ecosistema?.Descripcion,
+      Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
+      InvestigadoresRol = p.Asignaciones.Select(a => a.Rol.ToString()).ToList()
+    }).ToList();
+  }
   public async Task<IEnumerable<ProyectoDTO>> ObtenerTodosAsync()
   {
     var proyectos = await repository.GetProyectosAsync();
@@ -51,6 +69,7 @@ public class ProyectoService : IProyectoService
       FechaFinal = proyecto .FechaFinal,
       Estado = proyecto .Estado,
       EspecieFoco = proyecto .EspecieFoco,
+      EcosistemaId = proyecto.EcosistemaId,
       Ecosistema = proyecto .Ecosistema?.Descripcion,
       Investigadores = proyecto .Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
       InvestigadoresRol = proyecto.Asignaciones.Select(a => a.Rol.ToString()).ToList()

@@ -1,3 +1,4 @@
+using backend.ecoDTO;
 using backend.investigador;
 using backend.investigadorDTO;
 using backend.Services;
@@ -14,6 +15,13 @@ public class InvestigadorController : ControllerBase
   public InvestigadorController(IInvestigadorService service)
   {
     this.service = service;
+  }
+
+  [HttpGet("paginados")]
+  public async Task<ActionResult<IEnumerable<InvestigadorDTO>>> GetInvestigadores([FromQuery] int skip = 0, [FromQuery] int take = 10)
+  {
+    var investigadores = await service.ObtenerTodosPaginadosAsync(skip, take);
+    return Ok(investigadores);
   }
 
   [HttpGet]

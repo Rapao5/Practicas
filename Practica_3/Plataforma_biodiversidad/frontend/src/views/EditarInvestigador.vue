@@ -17,7 +17,7 @@ onMounted(async () => {
 });
 
 const volver = async (datos) => {
-  router.push(`/mostrarInvestigador/${idUrl}`)
+  router.push(`/investigador`)
 }
 
 const handleActualizar = async (datos) => {

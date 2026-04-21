@@ -8,14 +8,14 @@ const router = useRouter();
 const route = useRoute();
 const idProyecto = route.params.id;
 
-const volver = async (datos) => {
-  router.push(`/mostrarProyecto/${idProyecto}`);
+const volver = async () => {
+  router.push(`/asignacion/${idProyecto}`)
 }
 
 const handleCrear = async (datos) => {
   const exito = await store.createAsignacion(datos);
   if(exito){
-    router.push(`/mostrarProyecto/${idProyecto}`);
+    router.push(`/asignacion/${idProyecto}`)
   }
 } 
 </script>

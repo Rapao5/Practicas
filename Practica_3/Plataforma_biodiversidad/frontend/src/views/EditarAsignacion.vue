@@ -16,8 +16,8 @@ onMounted(async () => {
   await store.fetchAsignacionById(idUrl);
 });
 
-const volver = async (datos) => {
-  router.push(`/asignacion/${datos.proyectoId}`)
+const volver = async () => {
+  router.push(`/asignacion/${asignacion.value.proyectoId}`)
 }
 
 const handleActualizar = async (datos) => {

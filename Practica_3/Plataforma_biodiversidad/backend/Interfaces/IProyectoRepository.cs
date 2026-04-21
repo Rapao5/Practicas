@@ -4,6 +4,7 @@ namespace backend.Interfaces;
 
 public interface IProyectoRepository
 {
+  Task<IEnumerable<Proyecto>> GetProyectosPaginadosAsync(int skip, int take);
   Task<IEnumerable<Proyecto>> GetProyectosAsync();
   Task<Proyecto> GetByIdAsync(int id);
   Task AddAsync(Proyecto proyecto);

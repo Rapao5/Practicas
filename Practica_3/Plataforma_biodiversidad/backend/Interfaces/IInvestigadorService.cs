@@ -4,6 +4,7 @@ namespace backend.Services;
 
 public interface IInvestigadorService
 {
+  Task<IEnumerable<InvestigadorDTO>> ObtenerTodosPaginadosAsync(int skip, int take);
   Task<IEnumerable<InvestigadorDTO>> ObtenerTodosAsync();
   Task<InvestigadorDTO?> ObtenerPorIdAsync(int id);
   Task<InvestigadorDTO> CrearAsync(InvestigadorDTO dto);

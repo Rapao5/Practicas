@@ -2,9 +2,12 @@
 import { onMounted, computed } from 'vue';
 import { useEcosistemaStore } from '../stores/ecosistemaStore';
 import { useProyectoStore } from '../stores/proyectoStore';
+import { useInvestigadorStore } from '../stores/investigadorStore';
 
 const store = useEcosistemaStore();
 const storeProyeto = useProyectoStore();
+const storeInvestidor = useInvestigadorStore();
+
 
 const proyectosActivos = computed(() => {
   return storeProyeto.proyectoList.filter(proyecto => proyecto.estado === true);
@@ -13,74 +16,77 @@ const proyectosActivos = computed(() => {
 onMounted(async () => {
   await store.fetchEcosistemas();
   await storeProyeto.fetchProyectos();
+  await storeInvestidor.fetchInvestigadores();
 });
 </script>
 <template>
-  <div class="p-6 md:p-10 bg-slate-50 min-h-screen">  
-    <header class="mb-10 text-center">
-      <h1 class="text-4xl font-extrabold text-emerald-800 tracking-tight">
+  <div class="p-6 md:p-10 bg-slate-50 min-h-screen text-center"> 
+    <h1 class="text-4xl font-extrabold text-emerald-800 tracking-tight">
         Plataforma de Biodiversidad 🌿
-      </h1>
-      <h2 class="text-black mt-10 text-3xl">
-        Ecosistemas
-      </h2>
-      <p class="text-slate-500 mt-2 text-lg">
-        Total de ecosistemas gestionados: 
-        <span class="badge badge-lg badge-primary font-bold">{{ store.totalEcosistemas }}</span>
-      </p>
-    </header>
-    <div class="grid grid-cols-1 gap-6">
-      <div 
-        v-for="(ecosistema, index) in store.ecosistemaList" 
-        :key="ecosistema.id || index" 
-        class="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300 border-l-8 border-emerald-500">
-        <div class="card-body">
-          <h2 class="card-title text-2xl text-slate-800 mb-2">
-            {{ ecosistema.descripcion }}
-          </h2>
-
-          <div v-if="ecosistema.proyectos && ecosistema.proyectos.length > 0" class="mt-4">
-            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
-              Proyectos Asociados
-            </h3>
-            
-            <div class="flex flex-wrap gap-2">
-              <span 
-                v-for="(proyecto, pIndex) in ecosistema.proyectos" 
-                :key="pIndex"
-                class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
-                {{ proyecto }}
-              </span>
-            </div>
-          </div>
-
-          <div v-else class="mt-4 flex items-center text-slate-400 italic bg-slate-100 p-3 rounded-lg">
-            <span>No hay proyectos activos asignados a este ecosistema.</span>
-          </div>
-        </div>
+    </h1> 
+  <div class="relative w-full mt-10">
+    <img
+    src="https://actuamosporelclima.org/wp-content/uploads/2021/09/Ecosistemas-terrestres-header.jpg"
+      class="w-full" />
+  </div>
+ <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+  
+  <div class="card bg-white shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-b-4 border-emerald-500">
+    <div class="card-body items-center text-center">
+      <div class="bg-emerald-100 p-3 rounded-full mb-2">
+        <span class="text-2xl">🌍</span> 
       </div>
-    </div>
-    <header class="mb-10 text-center">
-      <h2 class="text-black mt-10 text-3xl">
-        Proyectos activos
-      </h2>
-        <p class="text-slate-500 mt-5 text-lg">
-        Total de proyectos activos: 
-        <span class="badge badge-lg badge-primary font-bold">{{ proyectosActivos.length }}</span>
-        </p>
-    </header>
-    <div class="grid grid-cols-1 gap-6">
-      <div v-for="(proyecto, index) in proyectosActivos"
-       :key="proyecto.id || index"
-       class="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300 border-l-8 border-emerald-500">
-        <div class="card-body">
-            <h2 class="card-title text-2xl text-slate-800 mb-2">
-                {{ proyecto.nombre}}
-            </h2>
-        </div>
+      <h2 class="card-title text-slate-400 uppercase text-xs tracking-widest">Ecosistemas</h2>
+      <p class="text-5xl font-black text-slate-800 my-2">{{ store.totalEcosistemas }}</p>
+      <p class="text-slate-500 text-sm">Hábitats bajo seguimiento</p>
+      <div class="card-actions mt-6 w-full">
+        <RouterLink :to="`/ecosistema`" class="w-full">
+          <button class="btn bg-emerald-500 hover:bg-emerald-600 text-white border-none w-full shadow-lg shadow-emerald-200">
+            Ver Listado
+          </button>
+        </RouterLink>
       </div>
     </div>
   </div>
+
+  <div class="card bg-white shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-b-4 border-sky-500">
+    <div class="card-body items-center text-center">
+      <div class="bg-sky-100 p-3 rounded-full mb-2">
+        <span class="text-2xl">🔬</span>
+      </div>
+      <h2 class="card-title text-slate-400 uppercase text-xs tracking-widest">Proyectos</h2>
+      <p class="text-5xl font-black text-slate-800 my-2">{{ proyectosActivos.length }}</p>
+      <p class="text-slate-500 text-sm">Investigaciones en curso</p>
+      <div class="card-actions mt-6 w-full">
+        <RouterLink :to="`/proyecto`" class="w-full">
+          <button class="btn bg-sky-500 hover:bg-sky-600 text-white border-none w-full shadow-lg shadow-sky-200">
+            Explorar Proyectos
+          </button>
+        </RouterLink>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-white shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-b-4 border-amber-500">
+    <div class="card-body items-center text-center">
+      <div class="bg-amber-100 p-3 rounded-full mb-2">
+        <span class="text-2xl">👥</span>
+      </div>
+      <h2 class="card-title text-slate-400 uppercase text-xs tracking-widest">Investigadores</h2>
+      <p class="text-5xl font-black text-slate-800 my-2">{{ storeInvestidor.totalInvestigadores }}</p>
+      <p class="text-slate-500 text-sm">Expertos asignados</p>
+      <div class="card-actions mt-6 w-full">
+        <RouterLink :to="`/investigador`" class="w-full">
+          <button class="btn bg-amber-500 hover:bg-amber-600 text-white border-none w-full shadow-lg shadow-amber-200">
+            Gestionar Equipo
+          </button>
+        </RouterLink>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
 </template>
 <style>
 </style>

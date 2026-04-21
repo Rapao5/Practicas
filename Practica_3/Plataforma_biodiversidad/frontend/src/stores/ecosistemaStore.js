@@ -14,6 +14,23 @@ export const useEcosistemaStore = defineStore('ecosistemas',{
   },
 
   actions: {
+    async fetchEcosistemasPaginados(skip, take){
+      try{
+        const response = await api.get(`ecosistema/paginados?skip=${skip}&take=${take}`);
+        const nuevosEcosistemas = response.data;
+
+        if (skip === 0) {
+          this.ecosistemaList = nuevosEcosistemas;
+        } else {
+          this.ecosistemaList.push(...nuevosEcosistemas);
+        }
+
+        return nuevosEcosistemas.length;
+      } catch (error) {
+        console.error("Error al cargar los ecosistemas paginados", error)
+        return 0;
+      }
+    },
     async fetchEcosistemas() {
       this.cargando = true;
       this.error = null;

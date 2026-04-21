@@ -4,6 +4,7 @@ namespace backend.Services;
 
 public interface IEcosistemaService
 {
+  Task<IEnumerable<EcosistemaDTO>> ObtenerTodosPaginadosAsync(int skip, int take);
   Task<IEnumerable<EcosistemaDTO>> ObtenerTodosAsync();
   Task<EcosistemaDTO?> ObtenerPorIdAsync(int id);
   Task<EcosistemaDTO> CrearAsync(EcosistemaDTO dto);

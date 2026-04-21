@@ -4,6 +4,7 @@ namespace backend.Services;
 
 public interface IProyectoService
 {
+  Task<IEnumerable<ProyectoDTO>> ObtenerTodosPaginadosAsync(int skip, int take);
   Task<IEnumerable<ProyectoDTO>> ObtenerTodosAsync();
   Task<ProyectoDTO?> ObtenerPorIdAsync(int id);
   Task<ProyectoDTO> CrearAsync(ProyectoDTO dto);

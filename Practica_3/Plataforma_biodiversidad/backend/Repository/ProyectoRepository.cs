@@ -12,6 +12,19 @@ public class ProyectoRepository : IProyectoRepository
   {
     this.context = context;
   }
+
+  public async Task<IEnumerable<Proyecto>> GetProyectosPaginadosAsync(int skip, int take)
+{
+    return await context.Proyectos
+        .Include(p => p.Ecosistema)
+        .Include(p => p.Asignaciones)
+            .ThenInclude(a => a.Investigador)
+        .OrderBy(p => p.Nombre) 
+        .Skip(skip)            
+        .Take(take)           
+        .ToListAsync();
+}
+
   public async Task<IEnumerable<Proyecto>> GetProyectosAsync()
   {
     return await context.Proyectos

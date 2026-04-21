@@ -30,6 +30,11 @@ const router = createRouter({
       component: Ecosistema
     },
     {
+      path: "/registroEcosistema",
+      name: "regsitroEcosistema",
+      component: RegistroEcosistema
+    },
+    {
       path: "/proyecto",
       name: "proyecto",
       component: Proyecto
@@ -53,11 +58,6 @@ const router = createRouter({
       path: "/mostrarInvestigador/:id",
       name: "mostrarInvestigador",
       component: MostrarInvestigador
-    },
-    {
-      path: "/registroEcosistema",
-      name: "registroEcosistema",
-      component: RegistroEcosistema
     },
     {
       path: "/editarEcosistema/:id",
@@ -89,7 +89,6 @@ const router = createRouter({
       name: "registroAsignacion",
       component: RegistroAsignacion
     },
-    ,
     {
       path: "/editarAsignacion/:id",
       name: "editarAsignacion",

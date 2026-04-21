@@ -13,6 +13,15 @@ public class EcosistemaRepository : IEcosistemaRepository
   {
       this.context=context;  
   }
+  public async Task<IEnumerable<Ecosistema>> GetEcosistemasPaginadosAsync(int skip, int take)
+  {
+    return await context.Ecosistemas
+                        .Include(e => e.Proyectos)
+                        .OrderBy(p => p.Descripcion) 
+                        .Skip(skip)            
+                        .Take(take)           
+                        .ToListAsync();
+  }
   public async Task<IEnumerable<Ecosistema>> GetEcosistemaAsync()
   {
     return await context.Ecosistemas
