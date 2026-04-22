@@ -19,7 +19,7 @@ public class ProyectoRepository : IProyectoRepository
         .Include(p => p.Ecosistema)
         .Include(p => p.Asignaciones)
             .ThenInclude(a => a.Investigador)
-        .OrderBy(p => p.Nombre) 
+        .OrderBy(p => p.Id) 
         .Skip(skip)            
         .Take(take)           
         .ToListAsync();
@@ -37,6 +37,7 @@ public class ProyectoRepository : IProyectoRepository
   public async Task<Proyecto> GetByIdAsync(int id)
   {
     return await context.Proyectos
+            .AsNoTracking()
             .Include(p => p.Ecosistema)
             .Include(p => p.Asignaciones)
                 .ThenInclude(a => a.Investigador)

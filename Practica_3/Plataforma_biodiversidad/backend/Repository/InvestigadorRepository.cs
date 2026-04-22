@@ -18,7 +18,7 @@ public class InvestigadorRepository : IInvestigadorRepository
     return await context.Investigadores
                         .Include(i => i.Asignaciones) 
                             .ThenInclude(a => a.Proyecto)
-                          .OrderBy(p => p.Nombre) 
+                          .OrderBy(p => p.Id) 
                         .Skip(skip)            
                         .Take(take)           
                         .ToListAsync();

@@ -70,7 +70,7 @@ onMounted(async () => {
   <div class="card bg-white shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-b-4 border-amber-500">
     <div class="card-body items-center text-center">
       <div class="bg-amber-100 p-3 rounded-full mb-2">
-        <span class="text-2xl">👥</span>
+        <span class="text-2xl">📙</span>
       </div>
       <h2 class="card-title text-slate-400 uppercase text-xs tracking-widest">Investigadores</h2>
       <p class="text-5xl font-black text-slate-800 my-2">{{ storeInvestidor.totalInvestigadores }}</p>

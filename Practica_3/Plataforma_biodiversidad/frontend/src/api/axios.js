@@ -1,49 +1,32 @@
 import axios from 'axios';
+import { useErrorStore } from '../stores/errorStore';
 
 const api = axios.create({
   baseURL: 'http://localhost:5100/api',
 });
 
 api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
+    const errorStore = useErrorStore();
+
     if (error.response) {
       const status = error.response.status;
       const data = error.response.data;
 
-      switch (status) {
-        case 400:
-        case 404:
-          let mensajeError = 'Error en la petición';
-          
-          if (typeof data === 'string') {
-            mensajeError = data;
-          } else if (data && data.message) {
-            mensajeError = data.message;
-          }
+      let mensajeFinal = 'Ocurrió un error inesperado';
 
-          console.error(`Toast [${status}]: ${mensajeError}`);
-          break;
-
-        case 401:
-          console.error('Toast: Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
-          break;
-
-        case 403:
-          console.error('Toast: No tienes permisos para realizar esta acción.');
-          break;
-
-        case 500:
-          console.error('Toast: Error interno del servidor.');
-          break;
-          
-        default:
-          console.error(`Toast: Ocurrió un error inesperado (Código ${status}).`);
+      if (typeof data === 'string') {
+        mensajeFinal = data;
+      } else if (data && data.message) {
+        mensajeFinal = data.message;
+      } else if (data && data.errors) {
+        mensajeFinal = Object.values(data.errors).flat().join(', ');
       }
+
+      errorStore.mostrar(mensajeFinal); 
     } else {
-      console.error('Toast: No se pudo conectar con el servidor.');
+      errorStore.mostrar('No se pudo conectar con el servidor.');
     }
     
     return Promise.reject(error);

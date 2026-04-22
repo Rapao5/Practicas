@@ -92,7 +92,7 @@ const guardar = () => {
       <div>
         <label class="label font-semibold text-slate-600">Estado</label>
         <br>
-        <select v-model="ecoForm.conservacion" class="label font-semibold text-slate-600">
+        <select v-model="ecoForm.conservacion" class="select select-bordered w-full">
           <option value="">Selecciona un estado</option>
           <option value="Intacto">Intacto</option>
           <option value="Vulnerable">Vulnerable</option>

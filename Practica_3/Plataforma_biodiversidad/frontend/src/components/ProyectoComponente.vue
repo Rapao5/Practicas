@@ -132,7 +132,7 @@ const guardar = () => {
 
       <div>
         <label class="label font-semibold text-slate-600">Estado</label>
-        <select v-model="proForm.estado" class="text-slate-600">
+        <select v-model="proForm.estado" class="select select-bordered w-full">
           <option :value="null">Selecciona un estado</option>
           <option :value="true">Activo</option>
           <option :value="false">Terminado</option>
@@ -142,14 +142,14 @@ const guardar = () => {
 
       <div>
         <label class="label font-semibold text-slate-600">Especie foco</label>
-        <input v-model="proForm.especieFoco" type="text" placeholder="Ej: Selva Amazónica" 
+        <input v-model="proForm.especieFoco" type="text" placeholder="Ej: Tigre" 
                class="input input-bordered w-full focus:border-emerald-500" required />
         <span class="text-error text-xs" v-if="errores.especieFoco">{{ errores.especieFoco }}</span>
       </div>
 
       <div>
         <label class="label font-bold text-slate-600">Ecosistema</label>
-        <select v-model="proForm.ecosistemaId" class="select select-bordered w-full text-slate-600" :class="{'select-error': errores.ecosistemaId}">
+        <select v-model="proForm.ecosistemaId" class="select select-bordered w-full" :class="{'select-error': errores.ecosistemaId}">
           <option :value="0" disabled>Selecciona un ecosistema</option>
           <option v-for="eco in ecoStore.ecosistemaList" :key="eco.id" :value="eco.id">
             {{ eco.descripcion }}

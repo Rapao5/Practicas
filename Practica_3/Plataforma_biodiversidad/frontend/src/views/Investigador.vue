@@ -65,6 +65,9 @@ const handleEliminar = async () => {
 };
 
 onMounted(async () => {
+  await store.fetchInvestigadores()
+  skip.value = 0;
+  await cargarSiguientePagina();
   if (centinela.value) {
     observer.observe(centinela.value);
   }
@@ -164,7 +167,7 @@ onUnmounted(() => {
       <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Proyectos y Roles</h3>
       <div v-if="seleccionado.proyectos?.length" class="flex flex-wrap gap-2">
         <span v-for="(proyecto, pIndex) in seleccionado.proyectos" :key="pIndex"
-          class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
+          class="badge badge-outline badge-md py-6 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
           {{ proyecto }}: <span class="font-bold ml-1">{{ seleccionado.asignaciones[pIndex] }}</span>
         </span>
       </div>

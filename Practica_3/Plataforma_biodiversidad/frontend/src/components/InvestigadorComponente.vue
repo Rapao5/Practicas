@@ -80,7 +80,7 @@ const guardar = () => {
     <div>
         <label class="label font-semibold text-slate-600">Estado</label>
         <br>
-        <select v-model="invForm.experiencia" class="label font-semibold text-slate-600">
+        <select v-model="invForm.experiencia" class="select select-bordered w-full">
           <option value="">Selecciona la experiencia</option>
           <option value="Junior">Junior</option>
           <option value="Semi_Senior">Semi-senior</option>

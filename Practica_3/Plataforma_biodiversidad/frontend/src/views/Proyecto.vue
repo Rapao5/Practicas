@@ -57,7 +57,8 @@ const handleEliminar = async (pro) => {
 };
 
 onMounted(async () => {
- 
+  skip.value = 0;
+  await cargarSiguientePagina()
   if (centinela.value) {
     observer.observe(centinela.value);
   }
@@ -94,7 +95,7 @@ onUnmounted(() => {
               <h2 class="card-title text-xl text-slate-600 mb-2 md:text-lg">Investigadores:</h2>
               <div class="flex flex-wrap gap-2">
                 <div v-for="(investigador, iIndex) in proyecto.investigadores" :key="iIndex">
-                  <span class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
+                  <span class="badge badge-outline badge-md py-6 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
                     {{ investigador }}: {{ proyecto.investigadoresRol[iIndex] }}
                   </span>
                 </div>

@@ -81,7 +81,7 @@ const guardar = () => {
   <div>
       <label class="label font-semibold text-slate-600">Rol</label>
       <br>
-      <select v-model="asigForm.rol" class="label font-semibold text-slate-600">
+      <select v-model="asigForm.rol" class="select select-bordered w-full">
         <option value="">Selecciona un rol</option>
         <option value="LiderCampo">Lider de campo</option>
         <option value="InvestigadorPrincipal">Investigador principal</option>

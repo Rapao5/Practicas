@@ -17,7 +17,7 @@ public class EcosistemaRepository : IEcosistemaRepository
   {
     return await context.Ecosistemas
                         .Include(e => e.Proyectos)
-                        .OrderBy(p => p.Descripcion) 
+                        .OrderBy(p => p.Id) 
                         .Skip(skip)            
                         .Take(take)           
                         .ToListAsync();

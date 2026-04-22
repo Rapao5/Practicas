@@ -32,7 +32,7 @@ const cargarSiguientePagina = async () => {
 
 const observer = new IntersectionObserver((entries) => {
   if (entries[0].isIntersecting) {
-    cargarSiguientePagina();
+    cargarSiguientePagina(); 
   }
 }, {threshold: 0.1});
 
@@ -63,6 +63,9 @@ const handleEliminar = async (eco) => {
 };
 
 onMounted(async () => {
+  await store.fetchEcosistemas()
+  skip.value = 0;
+  await cargarSiguientePagina()
   if (centinela.value) {
     observer.observe(centinela.value);
   }
@@ -99,11 +102,12 @@ onUnmounted(() => {
                 </h3>
                 <div class="flex flex-wrap gap-2">
                   <span 
-                    v-for="(proyecto, pIndex) in ecosistema.proyectos" 
+                    v-for="(proyecto, pIndex) in ecosistema.proyectos.slice(0, 4)" 
                     :key="pIndex"
                     class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
                     {{ proyecto }}
                   </span>
+                   <span class="text-slate-400">+ {{ ecosistema.proyectos.length - 4}}</span>
                 </div>
               </div>
               <div v-else class="flex items-center text-slate-400 italic bg-slate-100 p-3 rounded-lg text-sm">
