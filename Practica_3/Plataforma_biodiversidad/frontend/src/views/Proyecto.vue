@@ -1,47 +1,13 @@
 <script setup> 
-import { onMounted, onUnmounted, ref} from 'vue';
+import { onMounted, ref} from 'vue';
 import { useProyectoStore } from '../stores/proyectoStore';
+import { usePaginacion } from '../composables/usePaginacion';
+import { useModal } from '../composables/useModal';
 
 const store = useProyectoStore();
-const skip = ref(0);
-const take = 6; 
-const cargando = ref(false);
-const hayMas = ref(true);
-
 const centinela = ref(null);
-
-const cargarSiguientePagina = async () => {
-  if (cargando.value || !hayMas.value) return;
-
-  cargando.value = true;
-  const cantidadRecibida = await store.fetchProyectosPaginados(skip.value, take);
-  
-  if (cantidadRecibida < take) {
-    hayMas.value = false; 
-  }
-
-  skip.value += take; 
-  cargando.value = false;
-};
-
-const observer = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting) {
-    cargarSiguientePagina();
-  }
-}, { threshold: 0.1 });
-
-const modalRef = ref(null);
-const seleccionado = ref(null);
-
-const abrirModal = (pro) => {
-  seleccionado.value = pro; 
-  modalRef.value.showModal();
-};
-
-const cerrarModal = () => {
-  modalRef.value.close();
-  seleccionado.value = null;
-};
+const { cargando, hayMas, iniciarObservador, cargarMas } = usePaginacion(store.fetchProyectosPaginados);
+const { modalRef, seleccionado, abrirModal, cerrarModal } = useModal();
 
 const handleEliminar = async (pro) => {
   const confirmado = confirm("¿Estás seguro de que quieres eliminar este proyecto? Esta acción no se puede deshacer.");
@@ -57,14 +23,8 @@ const handleEliminar = async (pro) => {
 };
 
 onMounted(async () => {
-  skip.value = 0;
-  await cargarSiguientePagina()
-  if (centinela.value) {
-    observer.observe(centinela.value);
-  }
-});
-onUnmounted(() => {
-  observer.disconnect(); 
+  await cargarMas()
+  iniciarObservador(centinela.value);
 });
 </script>
 <template>
@@ -126,6 +86,7 @@ onUnmounted(() => {
         <span class="loading loading-spinner loading-lg text-emerald-500"></span>
         <p class="text-slate-400 text-sm italic">Cargando más proyectos...</p>
       </div>
+      
       <p v-if="!hayMas && store.proyectoList.length > 0" class="text-slate-400 italic">
         Has llegado al final de la lista
       </p>

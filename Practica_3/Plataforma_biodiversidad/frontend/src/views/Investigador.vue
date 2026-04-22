@@ -1,53 +1,13 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, ref, useModel } from 'vue';
 import { useInvestigadorStore } from '../stores/investigadorStore';
+import { usePaginacion } from '../composables/usePaginacion';
+import { useModal } from '../composables/useModal';
 
 const store = useInvestigadorStore();
-const skip = ref(0);
-const take = 6;
-const cargando = ref(false);
-const hayMas = ref(true);
-
 const centinela = ref(null);
-
-const cargarSiguientePagina = async () => {
-  if (cargando.value || !hayMas.value) return;
-
-  cargando.value=true;
-  try {
-    const cantidadRecibida = await store.fetchInvestigadoresPaginados(skip.value, take);
-
-    if (cantidadRecibida === 0 || cantidadRecibida < take) {
-      hayMas.value = false;
-    }
-
-    skip.value += take;
-  } catch (error) {
-    console.error("Fallo al cargar", error);
-    hayMas.value = false;
-  } finally {
-    cargando.value = false;
-  }
-}
-
-const observer = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting) {
-    cargarSiguientePagina();
-  }
-}, {threshold: 0.1});
-
-const modalRef = ref(null);
-const seleccionado = ref(null);
-
-const abrirModal = (inv) => {
-  seleccionado.value = inv; 
-  modalRef.value.showModal();
-};
-
-const cerrarModal = () => {
-  modalRef.value.close();
-  seleccionado.value = null;
-};
+const { cargando, hayMas, iniciarObservador, cargarMas } = usePaginacion(store.fetchInvestigadoresPaginados);
+const { modalRef, seleccionado, abrirModal, cerrarModal } = useModal();
 
 const handleEliminar = async () => {
   if (!seleccionado.value) return;
@@ -65,15 +25,9 @@ const handleEliminar = async () => {
 };
 
 onMounted(async () => {
-  await store.fetchInvestigadores()
-  skip.value = 0;
-  await cargarSiguientePagina();
-  if (centinela.value) {
-    observer.observe(centinela.value);
-  }
-});
-onUnmounted(() => {
-  observer.disconnect();
+  store.investigadorList = [];
+  await cargarMas();
+  iniciarObservador(centinela.value);
 });
 </script>
 <template>

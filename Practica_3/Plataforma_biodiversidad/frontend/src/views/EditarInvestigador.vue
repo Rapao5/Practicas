@@ -23,7 +23,7 @@ const volver = async (datos) => {
 const handleActualizar = async (datos) => {
   const exito = await store.updateInvestigador(idUrl, datos);
   if(exito){
-    router.push(`/mostrarInvestigador/${idUrl}`);
+    router.push(`/investigador`);
   }
 }
 </script>

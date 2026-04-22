@@ -22,7 +22,7 @@ onMounted(async () => {
 const handleActualizar = async (datos) => {
   const exito = await store.updateEcosistema(idUrl, datos);
   if (exito) {
-    router.push(`/mostrarEcosistema/${idUrl}`);
+    router.push(`/ecosistema`);
   }
 };
 </script>

@@ -1,53 +1,13 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useEcosistemaStore } from '../stores/ecosistemaStore';
+import { usePaginacion } from '../composables/usePaginacion';
+import { useModal } from '../composables/useModal';
 
 const store = useEcosistemaStore();
-const skip = ref(0);
-const take = 6;
-const cargando = ref(false);
-const hayMas = ref(true);
-
 const centinela = ref(null);
-
-const cargarSiguientePagina = async () => {
-  if (cargando.value || !hayMas.value) return;
-
-  cargando.value = true;
-  try {
-    const cantidadRecibida = await store.fetchEcosistemasPaginados(skip.value, take);
-    
-    if (cantidadRecibida === 0 || cantidadRecibida < take) {
-      hayMas.value = false; 
-    }
-
-    skip.value += take; 
-  } catch (error) {
-    console.error("Fallo al cargar", error);
-    hayMas.value = false;
-  } finally {
-    cargando.value = false; 
-  }
-}
-
-const observer = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting) {
-    cargarSiguientePagina(); 
-  }
-}, {threshold: 0.1});
-
-const modalRef = ref(null);
-const seleccionado = ref(null);
-
-const abrirModal = (eco) => {
-  seleccionado.value = eco;
-  modalRef.value.showModal();
-};
-
-const cerrarModal = () => {
-  modalRef.value.close();
-  seleccionado.value = null;
-};
+const { cargando, hayMas, iniciarObservador, cargarMas } = usePaginacion(store.fetchEcosistemasPaginados);
+const { modalRef, seleccionado, abrirModal, cerrarModal } = useModal();
 
 const handleEliminar = async (eco) => {
   const confirmado = confirm("¿Estás seguro de que quieres eliminar este ecosistema? Esta acción no se puede deshacer.");
@@ -63,15 +23,9 @@ const handleEliminar = async (eco) => {
 };
 
 onMounted(async () => {
-  await store.fetchEcosistemas()
-  skip.value = 0;
-  await cargarSiguientePagina()
-  if (centinela.value) {
-    observer.observe(centinela.value);
-  }
-});
-onUnmounted(() => {
-  observer.disconnect();
+  store.ecosistemaList = [];
+  await cargarMas()
+  iniciarObservador(centinela.value);
 });
 </script>
 <template>
