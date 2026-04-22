@@ -61,7 +61,7 @@ onMounted(async () => {
                     class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
                     {{ proyecto }}
                   </span>
-                   <span class="text-slate-400">+ {{ ecosistema.proyectos.length - 4}}</span>
+                   <span v-if="ecosistema.proyectos.length > 4" class="text-slate-400">+ {{ ecosistema.proyectos.length - 4}}</span>
                 </div>
               </div>
               <div v-else class="flex items-center text-slate-400 italic bg-slate-100 p-3 rounded-lg text-sm">
