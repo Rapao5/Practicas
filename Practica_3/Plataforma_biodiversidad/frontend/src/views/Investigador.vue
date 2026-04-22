@@ -103,7 +103,7 @@ onUnmounted(() => {
                     <span 
                       v-for="(proyecto, pIndex) in investigador.proyectos" 
                       :key="pIndex"
-                      class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
+                      class="badge badge-outline badge-md py-6 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
                       {{ proyecto }}: <span class="font-bold ml-1">{{ investigador.asignaciones[pIndex] }}</span>
                     </span>
                   </div>

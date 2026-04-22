@@ -55,47 +55,53 @@ const handleEliminar = async (asignacionId) => {
     </header>
     <button class="btn m-2 bg-emerald-500" @click="volver">Volver</button>
     <div class="grid grid-cols-1 gap-6">
-      <div v-for="(asignacion, index) in store.asignacionListProyecto" 
-        :key="asignacion.id || index" 
-        class="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300 border-l-8 border-emerald-500">
-        <div class="card-body grid grid-cols-3">
-          <div class="mt-2">
-          <h2 class="card-title text-xl text-slate-800 mb-2">
-            Nombre: 
-          </h2>
-          <span class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
-                {{ asignacion.investigador }}
-              </span>
-          </div>
-          <div class="mt-2">
-              <h3 class="card-title text-xl text-slate-800 mb-2">
-                Rol: 
-              </h3>
-              <span class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
-                {{ asignacion.rol }}
-              </span>
-          </div>
-          <div class="mt-2">
-              <h3 class="card-title text-xl text-slate-800 mb-2">
-                Fecha de entrada:
-              </h3>
-              <span  class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50">
-                  {{ asignacion.fechaEntrada }}
-              </span>
-          </div>
-          <div class="col-start-4">
-            <RouterLink :to="{
-              path: `/editarAsignacion/${asignacion.id}`
-            }">
-              <button class="btn m-2 bg-emerald-500">
-                  Editar asignación
-              </button>
-            </RouterLink>
-            <br>
-              <button @click="handleEliminar(asignacion.id)" class="btn bg-red-500">Eliminar asignación</button>
-          </div>
-        </div>
+  <div v-for="(asignacion, index) in store.asignacionListProyecto" 
+    :key="asignacion.id || index" 
+    class="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300 border-l-8 border-emerald-500">
+    
+    <div class="card-body grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+      
+      <div class="mt-2">
+        <h2 class="card-titl text-slate-800 mb-2 md:text-base uppercase text-xs font-bold tracking-wider">
+          Nombre: 
+        </h2>
+        <span class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50 w-full md:w-auto">
+          {{ asignacion.investigador }}
+        </span>
       </div>
+
+      <div class="mt-2">
+        <h3 class="card-title text-slate-800 mb-2 md:text-base uppercase text-xs font-bold tracking-wider">
+          Rol: 
+        </h3>
+        <span class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50 w-full md:w-auto">
+          {{ asignacion.rol }}
+        </span>
+      </div>
+
+      <div class="mt-2">
+        <h3 class="card-title text-slate-800 mb-2 md:text-base uppercase text-xs font-bold tracking-wider">
+          Fecha de entrada:
+        </h3>
+        <span class="badge badge-outline badge-md py-3 px-4 text-emerald-700 border-emerald-200 bg-emerald-50 w-full md:w-auto">
+          {{ asignacion.fechaEntrada }}
+        </span>
+      </div>
+
+      <div class="flex flex-col gap-2 mt-4 md:mt-0 md:items-end">
+        <RouterLink :to="{ path: `/editarAsignacion/${asignacion.id}` }" class="w-full md:w-auto">
+          <button class="btn bg-emerald-500 text-white w-full shadow-md border-none">
+            Editar asignación
+          </button>
+        </RouterLink>
+        
+        <button @click="handleEliminar(asignacion.id)" class="btn bg-red-500 text-white w-full md:w-auto shadow-md border-none">
+          Eliminar asignación
+        </button>
+      </div>
+
     </div>
+  </div>
+</div>
   </div>
 </template>
