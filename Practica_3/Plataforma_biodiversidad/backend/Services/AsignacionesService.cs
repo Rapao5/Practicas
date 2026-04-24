@@ -118,6 +118,7 @@ public class AsignacionesService : IAsignacionesService
       nuevaAsignacion.FechaEntrada= dto.FechaEntrada;
       nuevaAsignacion.ProyectoId = dto.ProyectoId;
       nuevaAsignacion.InvestigadorId = dto.InvestigadorId;
+      nuevaAsignacion.Investigador = null;
 
     await repository.Update(nuevaAsignacion);
   }
