@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import ProyectoForm from '../components/ProyectoComponente.vue';
-import { useProyectoStore } from '../stores/proyectoStore';
+import ProyectoForm from './ProyectoComponente.vue';
+import { useProyectoStore } from '../../stores/proyectoStore';
 
 const store = useProyectoStore();
 const router = useRouter();

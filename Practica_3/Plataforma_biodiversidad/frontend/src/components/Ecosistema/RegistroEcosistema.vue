@@ -1,6 +1,6 @@
 <script setup>
-import EcosistemaForm from '../components/ecosistemaComponente.vue';
-import { useEcosistemaStore } from '../stores/ecosistemaStore';
+import EcosistemaForm from './EcosistemaComponente.vue';
+import { useEcosistemaStore } from '../../stores/ecosistemaStore';
 import { useRouter } from 'vue-router';
 
 const store = useEcosistemaStore();

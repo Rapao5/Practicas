@@ -3,15 +3,15 @@ import Home from "../views/Home.vue";
 import Ecosistema from "../views/Ecosistema.vue";
 import Proyecto from "../views/Proyecto.vue";
 import Investigador from "../views/Investigador.vue";
-import RegistroEcosistema from "../views/RegistroEcosistema.vue";
-import EditarEcosistema from "../views/EditarEcosistema.vue";
-import RegistroProyecto from "../views/RegistroProyecto.vue";
-import EditarProyecto from "../views/EditarProyecto.vue";
-import RegistroInvestigador from "../views/RegistroInvestigador.vue";
-import EditarInvestigador from "../views/EditarInvestigador.vue";
-import RegistroAsignacion from "../views/RegistroAsignacion.vue";
+import RegistroEcosistema from "../components/Ecosistema/RegistroEcosistema.vue";
+import EditarEcosistema from "../components/Ecosistema/EditarEcosistema.vue";
+import RegistroProyecto from "../components/Proyecto/EditarProyecto.vue";
+import EditarProyecto from "../components/Proyecto/RegistroProyecto.vue";
+import RegistroInvestigador from "../components/Investigador/RegistroInvestigador.vue";
+import EditarInvestigador from "../components/Investigador/EditarInvestigador.vue";
+import RegistroAsignacion from "../components/Asignaciones/RegistroAsignacion.vue";
 import Asignacion from "../views/Asignacion.vue";
-import EditarAsignacion from "../views/EditarAsignacion.vue";
+import EditarAsignacion from "../components/Asignaciones/EditarAsignacion.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),

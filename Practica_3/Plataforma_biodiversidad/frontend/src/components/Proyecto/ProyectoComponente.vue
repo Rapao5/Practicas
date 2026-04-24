@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
-import { useProyectoStore } from '../stores/proyectoStore';
-import { useEcosistemaStore } from '../stores/ecosistemaStore';
+import { useProyectoStore } from '../../stores/proyectoStore';
+import { useEcosistemaStore } from '../../stores/ecosistemaStore';
 
 const props = defineProps({
   initialData: {

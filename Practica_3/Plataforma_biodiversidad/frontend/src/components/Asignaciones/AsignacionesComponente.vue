@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
-import { useInvestigadorStore } from '../stores/investigadorStore';
-import { useProyectoStore } from '../stores/proyectoStore';
+import { useInvestigadorStore } from '../../stores/investigadorStore';
+import { useProyectoStore } from '../../stores/proyectoStore';
 
 const props = defineProps({
   proyectoId: {

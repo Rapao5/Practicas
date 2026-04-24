@@ -1,8 +1,8 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
-import { useAsignacionStore } from '../stores/asignacionStore';
+import { useAsignacionStore } from '../../stores/asignacionStore';
 import { onMounted, computed } from 'vue';
-import AsignacionForm from '../components/AsignacionesComponente.vue';
+import AsignacionForm from './AsignacionesComponente.vue';
 
 
 const route = useRoute();

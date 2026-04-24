@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
-import AsginacionForm from '../components/AsignacionesComponente.vue';
-import { useAsignacionStore } from '../stores/asignacionStore';
+import AsginacionForm from './AsignacionesComponente.vue';
+import { useAsignacionStore } from '../../stores/asignacionStore';
 
 const store = useAsignacionStore();
 const router = useRouter();

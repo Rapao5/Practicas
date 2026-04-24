@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import { useInvestigadorStore } from '../stores/investigadorStore';
-import InvestigadorForm from '../components/investigadorComponente.vue';
+import { useInvestigadorStore } from '../../stores/investigadorStore';
+import InvestigadorForm from './InvestigadorComponente.vue';
 
 
 const store = useInvestigadorStore();

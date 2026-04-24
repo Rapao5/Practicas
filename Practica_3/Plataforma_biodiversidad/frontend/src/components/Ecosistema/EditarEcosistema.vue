@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useEcosistemaStore } from '../stores/ecosistemaStore';
-import EcosistemaForm from '../components/ecosistemaComponente.vue';
+import { useEcosistemaStore } from '../../stores/ecosistemaStore';
+import EcosistemaForm from './EcosistemaComponente.vue';
 
 const route = useRoute();
 const router = useRouter();

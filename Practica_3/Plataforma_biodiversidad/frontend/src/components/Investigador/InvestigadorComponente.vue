@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue';
-import { useInvestigadorStore } from '../stores/investigadorStore';
+import { useInvestigadorStore } from '../../stores/investigadorStore';
 
 
 const props = defineProps({
