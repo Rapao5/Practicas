@@ -18,7 +18,9 @@ public class EcosistemaService : IEcosistemaService
     return ecosistemas.Select(e => new EcosistemaDTO
     {
       Id = e.Id,
+      Nombre = e.Nombre,
       Descripcion = e.Descripcion,
+      Area = e.Area,
       AreaLatitud = e.AreaLatitud,
       AreaLongitud = e.AreaLongitud,
       Conservacion = e.Conservacion.ToString(),
@@ -32,7 +34,9 @@ public class EcosistemaService : IEcosistemaService
     var ecosistemasDTO = ecosistemas.Select(e => new EcosistemaDTO
     {
       Id = e.Id,
+      Nombre = e.Nombre,
       Descripcion = e.Descripcion,
+      Area = e.Area,
       AreaLatitud = e.AreaLatitud,
       AreaLongitud = e.AreaLongitud,
       Conservacion = e.Conservacion.ToString(),
@@ -51,7 +55,9 @@ public class EcosistemaService : IEcosistemaService
     var ecosistemaDTO =new EcosistemaDTO
     {
       Id = ecosistema.Id,
+      Nombre = ecosistema.Nombre,
       Descripcion = ecosistema.Descripcion,
+      Area = ecosistema.Area,
       AreaLatitud = ecosistema.AreaLatitud,
       AreaLongitud = ecosistema.AreaLongitud,
       Conservacion = ecosistema.Conservacion.ToString(),
@@ -65,7 +71,9 @@ public class EcosistemaService : IEcosistemaService
   {
     var nuevoEco = new Ecosistema
     {
+      Nombre = dto.Nombre,
       Descripcion = dto.Descripcion,
+      Area = dto.Area,
       AreaLatitud = dto.AreaLatitud,
       AreaLongitud = dto.AreaLongitud,
       Conservacion = Enum.Parse<Conservacion>(dto.Conservacion)
@@ -82,7 +90,9 @@ public class EcosistemaService : IEcosistemaService
     var eco = await repository.GetByIdAsync(id);
     if(eco == null ) return;
 
+      eco.Nombre = dto.Nombre;
       eco.Descripcion = dto.Descripcion;
+      eco.Area = dto.Area;
       eco.AreaLatitud = dto.AreaLatitud;
       eco.AreaLongitud = dto.AreaLongitud;
       eco.Conservacion = Enum.Parse<Conservacion>(dto.Conservacion);
@@ -108,7 +118,9 @@ public class EcosistemaService : IEcosistemaService
     var ecoDTO = new EcosistemaDTO
     {
       Id=ecosistemas.Id,
+      Nombre = ecosistemas.Nombre,
       Descripcion=ecosistemas.Descripcion,
+      Area = ecosistemas.Area,
       AreaLatitud=ecosistemas.AreaLatitud,
       AreaLongitud=ecosistemas.AreaLongitud,
       Conservacion=ecosistemas.Conservacion.ToString()
@@ -125,7 +137,9 @@ public class EcosistemaService : IEcosistemaService
     var ecoDTOs = ecosistemas.Select(e => new EcosistemaDTO
     {
       Id=e.Id,
+      Nombre = e.Nombre,
       Descripcion=e.Descripcion,
+      Area = e.Area,
       AreaLatitud=e.AreaLatitud,
       AreaLongitud=e.AreaLongitud,
       Conservacion=e.Conservacion.ToString()

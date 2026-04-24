@@ -46,7 +46,7 @@ onMounted(async () => {
           <div class="card-body grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
             
             <h2 class="card-title text-2xl text-slate-800">
-              {{ ecosistema.descripcion }}
+              {{ ecosistema.nombre }}
             </h2>
 
             <div class="md:col-span-2">
@@ -102,7 +102,7 @@ onMounted(async () => {
     <div v-if="seleccionado">
       <header class="flex justify-between items-start mb-6">
         <h2 class="text-3xl font-bold text-slate-800">
-          {{ seleccionado.descripcion }}
+          {{ seleccionado.nombre }}
         </h2>
         <form method="dialog">
           <button class="btn btn-sm btn-circle btn-ghost">✕</button>
@@ -111,7 +111,17 @@ onMounted(async () => {
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="p-4 bg-slate-50 rounded-lg">
-          <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Coordenadas / Área</h3>
+          <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Descripción</h3>
+          <p class="text-emerald-700 font-medium">{{ seleccionado.descripcion }}</p>
+        </div>
+
+        <div class="p-4 bg-slate-50 rounded-lg">
+          <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Área</h3>
+          <p class="text-emerald-700 font-medium">{{ seleccionado.area }} cm2</p>
+        </div>
+
+        <div class="p-4 bg-slate-50 rounded-lg">
+          <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Coordenadas</h3>
           <p class="text-emerald-700 font-medium">Long: {{ seleccionado.areaLongitud }}</p>
           <p class="text-emerald-700 font-medium">Lat: {{ seleccionado.areaLatitud }}</p>
         </div>

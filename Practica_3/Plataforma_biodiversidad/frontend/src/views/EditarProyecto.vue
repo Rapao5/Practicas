@@ -20,6 +20,7 @@ const volver = async (datos) => {
 }
 
 const handleActualizar = async (datos) => {
+  const proyectoData = { ...datos, id: Number(idUrl) };
   const exito = await store.updateProyecto(idUrl, datos);
   if(exito){
     router.push(`/proyecto`);

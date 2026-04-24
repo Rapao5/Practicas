@@ -152,7 +152,7 @@ const guardar = () => {
         <select v-model="proForm.ecosistemaId" class="select select-bordered w-full" :class="{'select-error': errores.ecosistemaId}">
           <option :value="0" disabled>Selecciona un ecosistema</option>
           <option v-for="eco in ecoStore.ecosistemaList" :key="eco.id" :value="eco.id">
-            {{ eco.descripcion }}
+            {{ eco.nombre }}
           </option>
         </select>
         <span class="text-error text-xs" v-if="errores.ecosistemaId">{{ errores.ecosistemaId }}</span>

@@ -5,7 +5,9 @@ const props = defineProps({
   initialData: {
     type: Object,
     default: () => ({
+      nombre: '',
       descripcion: '',
+      area: 0,
       areaLatitud: 0,
       areaLongitud: 0,
       conservacion: ''
@@ -16,7 +18,9 @@ const props = defineProps({
 const ecoForm = ref({...props.initialData});
 const emit = defineEmits(['enviar']);
 const errores = ref({
+  nombre: '',
   descripcion: '',
+  area: 0,
   areaLatitud: 0,
   areaLongitud: 0,
   aonservacion: ''
@@ -34,14 +38,24 @@ watch(
 
 const validar = () => {
   errores.value = {
+    nombre: '',
     descripcion: '',
+    area: '',
     areaLatitud: '',
     areaLongitud: '',
     conservacion: ''
   };
   let valido = true;
+  if(ecoForm.value.nombre.trim().length < 3){
+      errores.value.nombre = "El nombre del ecosistema debe contener min 3 caracteres."
+      valido = false
+  }
   if(ecoForm.value.descripcion.trim().length < 3){
       errores.value.descripcion = "La descripción del ecosistema debe contener min 3 caracteres."
+      valido = false
+  }
+  if(ecoForm.value.area < 0 ){
+      errores.value.areaLatitud = "El área debe ser mayor a 0."
       valido = false
   }
   if(ecoForm.value.areaLatitud > 90 || ecoForm.value.areaLatitud < -90){
@@ -68,11 +82,25 @@ const guardar = () => {
 
 <template>
   <div class="card bg-white shadow-lg p-6 border-t-4 border-emerald-500">
+    <div>
+        <label class="label font-semibold text-slate-600">Nombre</label>
+        <input v-model="ecoForm.nombre" type="text" placeholder="Ej: Selva Amazónica" 
+               class="input input-bordered w-full" required />
+        <span class="text-error text-xs" v-if="errores.nombre">{{ errores.nombre }}</span>
+      </div>
+
       <div>
         <label class="label font-semibold text-slate-600">Descripción del Ecosistema</label>
         <input v-model="ecoForm.descripcion" type="text" placeholder="Ej: Selva Amazónica" 
                class="input input-bordered w-full" required />
         <span class="text-error text-xs" v-if="errores.descripcion">{{ errores.Descripcion }}</span>
+      </div>
+
+      <div>
+        <label class="label font-semibold text-slate-600">Área</label>
+        <input v-model="ecoForm.area" type="text" placeholder="Ej: Selva Amazónica" 
+               class="input input-bordered w-full" required />
+        <span class="text-error text-xs" v-if="errores.area">{{ errores.area }}</span>
       </div>
 
       <div>

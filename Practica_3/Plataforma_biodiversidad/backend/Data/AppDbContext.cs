@@ -23,9 +23,17 @@ public AppDbContext() { }
     {
         modelBuilder.Entity<Ecosistema>().ToTable("ecosistemas");
         modelBuilder.Entity<Ecosistema>()
+                            .Property(e => e.Nombre)
+                            .HasColumnName("nombre")
+                            .HasColumnType("varchar(200)");
+        modelBuilder.Entity<Ecosistema>()
                             .Property(e => e.Descripcion)
                             .HasColumnName("descripcionEcosistema")
                             .HasColumnType("varchar(500)");
+        modelBuilder.Entity<Ecosistema>()
+                            .Property(e => e.Area)
+                            .HasColumnName("area")
+                            .HasColumnType("float");
         modelBuilder.Entity<Ecosistema>()
                             .Property(e => e.AreaLatitud)
                             .HasColumnName("areaLatitud")

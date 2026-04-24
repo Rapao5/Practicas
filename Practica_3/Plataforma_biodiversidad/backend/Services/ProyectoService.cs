@@ -28,7 +28,7 @@ public class ProyectoService : IProyectoService
       FechaFinal = p.FechaFinal,
       Estado = p.Estado,
       EspecieFoco = p.EspecieFoco,
-      Ecosistema = p.Ecosistema?.Descripcion,
+      Ecosistema = p.Ecosistema?.Nombre,
       Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
       InvestigadoresRol = p.Asignaciones.Select(a => a.Rol.ToString()).ToList()
     }).ToList();
@@ -46,7 +46,7 @@ public class ProyectoService : IProyectoService
       FechaFinal = p.FechaFinal,
       Estado = p.Estado,
       EspecieFoco = p.EspecieFoco,
-      Ecosistema = p.Ecosistema?.Descripcion,
+      Ecosistema = p.Ecosistema?.Nombre,
       Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
       InvestigadoresRol = p.Asignaciones.Select(a => a.Rol.ToString()).ToList()
     }).ToList();
@@ -70,7 +70,7 @@ public class ProyectoService : IProyectoService
       Estado = proyecto .Estado,
       EspecieFoco = proyecto .EspecieFoco,
       EcosistemaId = proyecto.EcosistemaId,
-      Ecosistema = proyecto .Ecosistema?.Descripcion,
+      Ecosistema = proyecto .Ecosistema?.Nombre,
       Investigadores = proyecto .Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
       InvestigadoresRol = proyecto.Asignaciones.Select(a => a.Rol.ToString()).ToList()
     };
@@ -119,6 +119,7 @@ public class ProyectoService : IProyectoService
     nuevoProyecto.Estado=dto.Estado;
     nuevoProyecto.EspecieFoco=dto.EspecieFoco;
     nuevoProyecto.EcosistemaId=dto.EcosistemaId;
+    nuevoProyecto.Ecosistema = null;
 
     await repository.Update(nuevoProyecto);
   }
@@ -145,7 +146,7 @@ public class ProyectoService : IProyectoService
       FechaFinal = p.FechaFinal,
       Estado = p.Estado,
       EspecieFoco = p.EspecieFoco,
-      Ecosistema = p.Ecosistema?.Descripcion,
+      Ecosistema = p.Ecosistema?.Nombre,
       Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
       InvestigadoresRol = p.Asignaciones.Select(a => a.Rol.ToString()).ToList()
     }).ToList();
@@ -168,7 +169,7 @@ public class ProyectoService : IProyectoService
       FechaFinal = p.FechaFinal,
       Estado = p.Estado,
       EspecieFoco = p.EspecieFoco,
-      Ecosistema = p.Ecosistema?.Descripcion,
+      Ecosistema = p.Ecosistema?.Nombre,
       Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
       InvestigadoresRol = p.Asignaciones.Select(a => a.Rol.ToString()).ToList()
     }).ToList();
@@ -189,7 +190,7 @@ public class ProyectoService : IProyectoService
       FechaFinal = p.FechaFinal,
       Estado = p.Estado,
       EspecieFoco = p.EspecieFoco,
-      Ecosistema = p.Ecosistema?.Descripcion,
+      Ecosistema = p.Ecosistema?.Nombre,
       Investigadores = p.Asignaciones.Select(a => a.Investigador.Nombre).ToList(),
       InvestigadoresRol = p.Asignaciones.Select(a => a.Rol.ToString()).ToList()
     }).ToList();

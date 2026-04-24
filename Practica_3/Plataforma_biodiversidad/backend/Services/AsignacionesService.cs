@@ -70,10 +70,10 @@ public class AsignacionesService : IAsignacionesService
           {
             throw new ArgumentException("El investigador ya está asignado en este proyecto");
           }
-          if(asig.Rol == 0)
-        {
-          throw new ArgumentException("El investigador ya es lider de campo en otro proyecto");
-        }
+          if(asig.Rol == 0 && dto.Rol == "LiderCampo")
+          {
+            throw new ArgumentException("El investigador ya es lider de campo en otro proyecto");
+          }
         }
       }
     }
@@ -104,9 +104,9 @@ public class AsignacionesService : IAsignacionesService
         if(proyecto.Estado == true)
         {
           if(asig.Rol == 0)
-        {
-          throw new ArgumentException("El investigador ya es lider de campo en otro proyecto");
-        }
+          {
+            throw new ArgumentException("El investigador ya es lider de campo en otro proyecto");
+          }
         }
       }
     }

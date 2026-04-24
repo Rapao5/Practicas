@@ -32,12 +32,14 @@ public class EcosistemaRepository : IEcosistemaRepository
   public async Task<Ecosistema> GetByIdAsync(int id)
   {
     return await context.Ecosistemas
+                  .AsNoTracking()
                   .Include(e => e.Proyectos)
                   .FirstOrDefaultAsync(e => e.Id == id);
   }
   public async Task<Ecosistema> GetByIdBasicAsync(int id)
   {
     return await context.Ecosistemas
+                  .AsNoTracking()
                   .FirstOrDefaultAsync(e => e.Id == id);
   }
   public async Task AddAsync(Ecosistema ecosistema)
