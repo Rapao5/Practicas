@@ -9,6 +9,7 @@ public class Proyecto
 {
   public int Id {get; set;}
   [Required]
+  [MinLength(3, ErrorMessage = "El nombre es demasiado corto")]
   [MaxLength(100)]
   public string Nombre {get; set;} = null!;
   public required decimal Presupuesto {get; set;}

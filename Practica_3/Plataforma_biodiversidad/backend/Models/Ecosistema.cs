@@ -18,6 +18,7 @@ public class Ecosistema
   [MaxLength(200)]
   public string Nombre {get; set;} = null!;
   [Required]
+  [MinLength(3, ErrorMessage = "El nombre es demasiado corto")]
   [MaxLength(500)]
   public string Descripcion {get; set;} = null!;
   public required decimal Area {get; set;}

@@ -14,6 +14,7 @@ public class Investigador
 {
   public int Id {get; set;}
   [Required]
+  [MinLength(3, ErrorMessage = "El nombre es demasiado corto")]
   [MaxLength(200)]
   public string Nombre {get; set;} = null!;
   [Required]
