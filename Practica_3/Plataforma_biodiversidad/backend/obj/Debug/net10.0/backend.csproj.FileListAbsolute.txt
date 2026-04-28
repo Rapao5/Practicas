@@ -17,6 +17,7 @@ C:\Users\Alumno6.DESKTOP-GENNFTG\Desktop\Practicas\Practica_3\Plataforma_biodive
 C:\Users\Alumno6.DESKTOP-GENNFTG\Desktop\Practicas\Practica_3\Plataforma_biodiversidad\backend\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\Alumno6.DESKTOP-GENNFTG\Desktop\Practicas\Practica_3\Plataforma_biodiversidad\backend\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Users\Alumno6.DESKTOP-GENNFTG\Desktop\Practicas\Practica_3\Plataforma_biodiversidad\backend\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Alumno6.DESKTOP-GENNFTG\Desktop\Practicas\Practica_3\Plataforma_biodiversidad\backend\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.InMemory.dll
 C:\Users\Alumno6.DESKTOP-GENNFTG\Desktop\Practicas\Practica_3\Plataforma_biodiversidad\backend\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\Alumno6.DESKTOP-GENNFTG\Desktop\Practicas\Practica_3\Plataforma_biodiversidad\backend\bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Alumno6.DESKTOP-GENNFTG\Desktop\Practicas\Practica_3\Plataforma_biodiversidad\backend\bin\Debug\net10.0\Mono.TextTemplating.dll

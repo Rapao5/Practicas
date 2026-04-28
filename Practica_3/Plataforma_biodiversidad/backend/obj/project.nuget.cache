@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "g4AMZDc2Ye0=",
+  "dgSpecHash": "TfNXd7LhyM0=",
   "success": true,
   "projectFilePath": "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\Desktop\\Practicas\\Practica_3\\Plataforma_biodiversidad\\backend\\backend.csproj",
   "expectedPackageFiles": [
@@ -18,6 +18,7 @@
     "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.2\\microsoft.entityframeworkcore.abstractions.9.0.2.nupkg.sha512",
     "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\9.0.2\\microsoft.entityframeworkcore.analyzers.9.0.2.nupkg.sha512",
     "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.entityframeworkcore.design\\9.0.2\\microsoft.entityframeworkcore.design.9.0.2.nupkg.sha512",
+    "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\9.0.2\\microsoft.entityframeworkcore.inmemory.9.0.2.nupkg.sha512",
     "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\9.0.2\\microsoft.entityframeworkcore.relational.9.0.2.nupkg.sha512",
     "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\9.0.2\\microsoft.entityframeworkcore.tools.9.0.2.nupkg.sha512",
     "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.5\\microsoft.extensions.configuration.abstractions.10.0.5.nupkg.sha512",
@@ -38,7 +39,7 @@
     {
       "code": "NU1510",
       "level": "Warning",
-      "message": "PackageReference Microsoft.Extensions.Configuration.Abstractions no se eliminará. Considere la posibilidad de quitar este paquete de las dependencias, ya que es probable que no sea necesario.",
+      "message": "PackageReference Microsoft.Extensions.Configuration.Abstractions will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
       "projectPath": "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\Desktop\\Practicas\\Practica_3\\Plataforma_biodiversidad\\backend\\backend.csproj",
       "warningLevel": 1,
       "filePath": "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\Desktop\\Practicas\\Practica_3\\Plataforma_biodiversidad\\backend\\backend.csproj",
@@ -50,7 +51,7 @@
     {
       "code": "NU1510",
       "level": "Warning",
-      "message": "PackageReference Microsoft.Extensions.Configuration.Json no se eliminará. Considere la posibilidad de quitar este paquete de las dependencias, ya que es probable que no sea necesario.",
+      "message": "PackageReference Microsoft.Extensions.Configuration.Json will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
       "projectPath": "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\Desktop\\Practicas\\Practica_3\\Plataforma_biodiversidad\\backend\\backend.csproj",
       "warningLevel": 1,
       "filePath": "C:\\Users\\Alumno6.DESKTOP-GENNFTG\\Desktop\\Practicas\\Practica_3\\Plataforma_biodiversidad\\backend\\backend.csproj",
