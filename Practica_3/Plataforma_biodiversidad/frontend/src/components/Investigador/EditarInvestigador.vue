@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useInvestigadorStore } from '../../stores/investigadorStore';
 import { computed, onMounted } from 'vue';
-import InvestigadorForm from './investigadorComponente.vue';
+import InvestigadorForm from './InvestigadorComponente.vue';
 
 
 const store = useInvestigadorStore();

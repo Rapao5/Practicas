@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useErrorStore } from '../stores/errorStore';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5100/api',
+  baseURL: 'http://localhost:8080/api',
 });
 
 api.interceptors.response.use(
